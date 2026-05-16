@@ -124,11 +124,19 @@ export function buildDexSvg(name, grade, type, desc, report, entityId, tagsRaw =
   <rect x="24" y="118" width="${WIDTH-48}" height="96" fill="#001208" stroke="#1a3a20"/>
   <rect x="24" y="118" width="${WIDTH-48}" height="96" fill="url(#scanNoise)" opacity="0.12"/>
   <text x="${WIDTH/2}" y="158" font-family="${FONT_MONO}" font-size="10" fill="${green}" text-anchor="middle" opacity="0.45" letter-spacing="2">[ ENTITY_SCAN ]</text>
-  <text x="${WIDTH/2}" y="182" font-family="${FONT_KR}" font-size="17" fill="${green}" text-anchor="middle" font-weight="bold">${safeName}</text>
+  <foreignObject x="70" y="166" width="${WIDTH - 140}" height="28">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;margin:0;padding:0 8px;box-sizing:border-box;overflow:hidden;">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:${FONT_KR};font-size:17px;font-weight:700;color:${green};line-height:1.2;text-align:center;word-break:keep-all;overflow-wrap:break-word;max-width:100%;max-height:100%;overflow:hidden;">${safeName}</div>
+    </div>
+  </foreignObject>
   <text x="${WIDTH-36}" y="202" font-family="${FONT_MONO}" font-size="9" fill="${dim}" text-anchor="end">entity_scan.bmp</text>
   <rect x="24" y="224" width="${WIDTH-48}" height="${72 + (descLines - 1) * 18}" fill="#0a0a0a" stroke="${border}"/>
   <text x="32" y="242" font-family="${FONT_MONO}" font-size="10" fill="${green}">◆ 분류</text>
-  <text x="${WIDTH-32}" y="242" font-family="${FONT_KR}" font-size="12" fill="#e8e8e8" text-anchor="end">${safeType}</text>
+  <foreignObject x="142" y="228" width="${WIDTH - 174}" height="24">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;align-items:center;justify-content:flex-end;width:100%;height:100%;margin:0;padding:0;box-sizing:border-box;overflow:hidden;">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:${FONT_KR};font-size:12px;color:#e8e8e8;line-height:1.25;text-align:right;word-break:keep-all;overflow-wrap:break-word;max-width:100%;max-height:100%;overflow:hidden;">${safeType}</div>
+    </div>
+  </foreignObject>
   <line x1="32" y1="248" x2="${WIDTH-32}" y2="248" stroke="#222" stroke-dasharray="2,3"/>
   <text x="32" y="266" font-family="${FONT_MONO}" font-size="10" fill="${green}">◆ 개요</text>
   <foreignObject x="32" y="272" width="${WIDTH-64}" height="${descLines * 22}">

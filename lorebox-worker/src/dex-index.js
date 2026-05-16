@@ -1,7 +1,7 @@
 /**
  * 도감 메인 — 스마트폰 내부 조회 UI (전체 목록 나열 없음)
  */
-import { escapeXml } from './util.js';
+import { escapeXml, clampLen, foText } from './util.js';
 import { getTrendingEntries } from './dex-db.js';
 
 const W = 390;
@@ -70,8 +70,8 @@ function trendingRow(entry, rank, y) {
   <rect x="${PAD + 28}" y="${y + 11}" width="${gradeW}" height="18" rx="4" fill="${G.fill}" stroke="${G.color}" stroke-width="1"/>
   <text x="${PAD + 28 + gradeW / 2}" y="${y + 24}" font-family="${FONT_MONO}" font-size="10" fill="${G.color}" text-anchor="middle" font-weight="bold">${G.label}</text>
   ${tagMarkup}
-  <text x="${nameX}" y="${y + 19}" font-family="${FONT_KR}" font-size="13" fill="#f0f0f0" font-weight="bold">${escapeXml(entry.name)}</text>
-  <text x="${nameX}" y="${y + 33}" font-family="${FONT_MONO}" font-size="9" fill="#5a6a5a">${escapeXml(entry.id)}</text>
+  ${foText(nameX, y + 5, PAD + INNER - 86 - nameX, 20, clampLen(entry.name, 18), { fontSize: 12, color: '#f0f0f0', fontFamily: FONT_KR, fontWeight: 'bold', maxLen: 18, singleLine: true })}
+  ${foText(nameX, y + 22, PAD + INNER - 86 - nameX, 14, entry.id, { fontSize: 8, color: '#5a6a5a', fontFamily: FONT_MONO, maxLen: 12, singleLine: true })}
   <text x="${PAD + INNER - 8}" y="${y + 24}" font-family="${FONT_MONO}" font-size="10" fill="#3dff6a" text-anchor="end">${fmtViews(entry.views)}</text>`;
 }
 
@@ -90,7 +90,7 @@ export function buildDexIndexSvg(entries) {
   const trendRows = trending.map((e, i) => trendingRow(e, i + 1, trendY + i * 42)).join('');
   const adminHtml = ADMIN_LOG.map(
     (line) =>
-      `<div style="margin:0 0 5px;font-size:10px;line-height:1.4;color:#5ddf7a;">&gt; ${escapeXml(line)}</div>`
+      `<div style="margin:0 0 5px;font-size:9px;line-height:1.35;color:#5ddf7a;word-break:keep-all;overflow-wrap:break-word;">&gt; ${escapeXml(line)}</div>`
   ).join('');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -131,7 +131,7 @@ export function buildDexIndexSvg(entries) {
   <text x="${PAD + 10}" y="414" font-family="${FONT_MONO}" font-size="9" fill="${dim}">admin_share.log</text>
   <text x="${PAD + 10}" y="428" font-family="${FONT_KR}" font-size="9" fill="#4a6a4a">현장·관제 공유</text>
   <foreignObject x="${PAD + 8}" y="434" width="${INNER - 16}" height="88">
-    <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:${FONT_MONO};">${adminHtml}</div>
+    <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:${FONT_MONO};overflow:hidden;max-height:88px;">${adminHtml}</div>
   </foreignObject>
 
   <rect x="${W / 2 - 40}" y="${H - 18}" width="80" height="4" rx="2" fill="#444"/>

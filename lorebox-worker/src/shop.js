@@ -2,7 +2,7 @@
  * 상점 v25 — 가로형 스마트폰 HUD 상점
  * 긴 직사각형 정보 박스 / 어두운 면 / 검은 그림자 / 블루 세그먼트
  */
-import { escapeXml, fmt, decodeParam, clampLen, safeIconId } from './util.js';
+import { escapeXml, fmt, decodeParam, clampLen, safeIconId, foText } from './util.js';
 
 const W = 600;
 const H = 360;
@@ -95,8 +95,8 @@ function panelRect(x, y, w, h, inner = '') {
 }
 
 function mainDisplay(x, y, w, h, item, assetBase) {
-  const name = escapeXml(clampLen(item.name || '—', 12));
-  const desc = item.desc ? escapeXml(clampLen(item.desc, 18)) : '';
+  const name = clampLen(item.name || '—', 12);
+  const desc = item.desc ? clampLen(item.desc, 18) : '';
   const price = escapeXml(fmt(item.price || '0'));
   return `
   <g filter="url(#drop)">
@@ -106,8 +106,8 @@ function mainDisplay(x, y, w, h, item, assetBase) {
     <rect x="${x + 234}" y="${y + 16}" width="${w - 250}" height="${h - 32}" fill="${SLOT}" opacity="0.92"/>
     <text x="${x + 338}" y="${y + 38}" font-family="${FONT_EN}" font-size="8" fill="${BLUE}" opacity="0.65" letter-spacing="2" text-anchor="middle">RECOMMENDED</text>
     ${thumb(x + 116, y + h / 2, 74, item.iconId, assetBase)}
-    <text x="${x + 252}" y="${y + 66}" font-family="${FONT_KO}" font-size="21" fill="url(#titleG)" font-weight="800">${name}</text>
-    ${desc ? `<text x="${x + 252}" y="${y + 90}" font-family="${FONT_KO}" font-size="12" fill="${DIM}" font-weight="700">${desc}</text>` : ''}
+    ${foText(x + 252, y + 46, w - 282, 30, name, { fontSize: 18, color: DISPLAY, fontFamily: FONT_KO, fontWeight: '800', maxLen: 16, singleLine: true })}
+    ${desc ? foText(x + 252, y + 76, w - 282, 24, desc, { fontSize: 11, color: DIM, fontFamily: FONT_KO, fontWeight: '700', maxLen: 24 }) : ''}
     <rect x="${x + w - 166}" y="${y + h - 42}" width="140" height="28" fill="#020505"/>
     <text x="${x + w - 38}" y="${y + h - 23}" font-family="${FONT_KO}" font-size="15" fill="url(#goldG)" text-anchor="end" font-weight="800">${price}</text>
   </g>`;
@@ -125,7 +125,7 @@ function previewPanel(x, y, w, h, item, assetBase) {
     <rect x="${x + 10}" y="${y + 10}" width="122" height="${h - 20}" fill="url(#scan)" opacity="0.35"/>
     ${thumb(x + 71, y + h / 2, 54, iconId, assetBase)}
     <text x="${x + 148}" y="${y + 22}" font-family="${FONT_EN}" font-size="8" fill="${BLUE}" opacity="0.75">preview</text>
-    <text x="${x + 148}" y="${y + 44}" font-family="${FONT_KO}" font-size="14" fill="url(#titleG)" font-weight="800">${escapeXml(clampLen(item.name || '—', 16))}</text>
+    ${foText(x + 148, y + 30, w - 164, 24, item.name || '—', { fontSize: 13, color: DISPLAY, fontFamily: FONT_KO, fontWeight: '800', maxLen: 18, singleLine: true })}
     <text x="${x + 148}" y="${y + 64}" font-family="${FONT_EN}" font-size="8" fill="${DIM}">${iconId ? escapeXml(iconId) + '.png' : 'default_seal'}</text>
     `
   );
@@ -133,14 +133,14 @@ function previewPanel(x, y, w, h, item, assetBase) {
 
 function listLine(x, y, w, item, assetBase) {
   if (!item) return '';
-  const name = escapeXml(clampLen(item.name, 14));
+  const name = clampLen(item.name, 14);
   const price = escapeXml(fmt(item.price));
   return `
   <g filter="url(#drop)">
     <rect x="${x}" y="${y - 18}" width="${w}" height="30" fill="${PANEL_2}" stroke="${EDGE}" stroke-width="1"/>
     <rect x="${x + 8}" y="${y - 14}" width="28" height="22" fill="${SLOT}"/>
     ${thumb(x + 22, y - 3, 20, item.iconId, assetBase)}
-    <text x="${x + 46}" y="${y}" font-family="${FONT_KO}" font-size="13" fill="${WHITE}" font-weight="800">${name}</text>
+    ${foText(x + 46, y - 16, 78, 22, name, { fontSize: 12, color: WHITE, fontFamily: FONT_KO, fontWeight: '800', maxLen: 14, singleLine: true })}
     <line x1="${x + 128}" y1="${y - 4}" x2="${x + w - 90}" y2="${y - 4}" stroke="#252525" stroke-dasharray="2,4"/>
     <text x="${x + w - 12}" y="${y}" font-family="${FONT_KO}" font-size="12" fill="url(#goldG)" text-anchor="end" font-weight="800">${price}</text>
   </g>`;

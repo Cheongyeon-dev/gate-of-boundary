@@ -65,6 +65,28 @@ function combatText(raw, max = 48) {
   ));
 }
 
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function combatTextMarkup(raw, max = 48, emphasisRaw = '') {
+  let safe = combatText(raw, max);
+  const tokens = decodeParam(emphasisRaw || '')
+    .split(/[|,]/)
+    .map((token) => escapeXml(clampLen(token.trim(), 16)))
+    .filter(Boolean)
+    .sort((a, b) => b.length - a.length);
+
+  for (const token of tokens) {
+    safe = safe.replace(
+      new RegExp(escapeRegExp(token), 'g'),
+      `<span style="color:#ff4d67;text-shadow:0 0 6px rgba(255,77,103,0.58),0 0 14px rgba(100,0,18,0.72);">${token}</span>`
+    );
+  }
+
+  return safe;
+}
+
 function combatShell(body, h = 214, tone = 'red') {
   const accent = tone === 'blue' ? '#5eb8ff' : tone === 'gold' ? '#d4b87a' : '#ff365e';
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -93,7 +115,11 @@ function combatEngageSvg(params) {
   const target = combatText(params.get('target') || '미확인 대상', 18);
   const entityId = escapeXml(clampLen(decodeParam(params.get('id') || params.get('targetId') || ''), 12));
   const risk = escapeXml(clampLen(decodeParam(params.get('risk') || params.get('grade') || ''), 14));
-  const intro = combatText(params.get('intro') || params.get('log') || '대상이 모습을 드러냈다.', 44);
+  const intro = combatTextMarkup(
+    params.get('intro') || params.get('log') || '대상이 모습을 드러냈다.',
+    54,
+    params.get('em') || params.get('emphasis') || ''
+  );
   const decision = combatText(params.get('decision') || params.get('response') || '대응 판단 대기', 42);
   const turn = escapeXml(clampLen(decodeParam(params.get('turn') || '01'), 4));
 
@@ -102,13 +128,19 @@ function combatEngageSvg(params) {
   <text x="554" y="50" font-family="'Batang',serif" font-size="16" fill="#f0ebe3" text-anchor="end" font-weight="700">${target}</text>
   <text x="554" y="68" font-family="Consolas,monospace" font-size="9" fill="#8a7a82" text-anchor="end">${entityId}${entityId && risk ? ' · ' : ''}${risk}</text>
   <g filter="url(#softC)">
-    <rect x="70" y="58" width="340" height="64" fill="#100007" stroke="#241018"/>
-    <rect x="70" y="58" width="340" height="64" fill="url(#scanC)" opacity="0.7"/>
-    <text x="240" y="94" font-family="'Batang',serif" font-size="15" fill="#f0ebe3" text-anchor="middle" font-weight="700" filter="url(#textC)">${intro}</text>
+    <rect x="58" y="56" width="382" height="68" fill="#100007" stroke="#241018"/>
+    <rect x="58" y="56" width="382" height="68" fill="url(#scanC)" opacity="0.7"/>
+    <foreignObject x="72" y="64" width="354" height="52">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;margin:0;padding:0 14px;box-sizing:border-box;overflow:hidden;">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%;font-family:'Batang','Nanum Myeongjo',serif;font-size:13px;font-weight:700;line-height:1.32;color:#f0ebe3;text-align:left;word-break:keep-all;overflow-wrap:break-word;white-space:pre-wrap;max-width:100%;max-height:100%;overflow:hidden;text-shadow:0 0 8px rgba(255,54,94,0.22);">${intro}</div>
+      </div>
+    </foreignObject>
   </g>
   <rect x="70" y="136" width="456" height="24" fill="#100007" stroke="#241018"/>
   <text x="86" y="152" font-family="'Batang',serif" font-size="11" fill="#ff365e" font-weight="700">권고</text>
-  <text x="150" y="152" font-family="'Batang',serif" font-size="11" fill="#d8dee8">${decision}</text>
+  <foreignObject x="126" y="139" width="386" height="20">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;align-items:center;width:100%;height:100%;margin:0;padding:0;box-sizing:border-box;font-family:'Batang','Nanum Myeongjo',serif;font-size:10px;line-height:1.25;color:#d8dee8;word-break:keep-all;overflow-wrap:break-word;overflow:hidden;">${decision}</div>
+  </foreignObject>
   `, 174);
 }
 
@@ -135,7 +167,9 @@ function combatResolveSvg(params) {
   <g filter="url(#softC)">
     <text x="116" y="112" font-family="Georgia,serif" font-size="44" fill="#ff365e" text-anchor="middle">${mark}</text>
     <text x="190" y="94" font-family="'Batang',serif" font-size="15" fill="#d0a24a" font-weight="700">${label}</text>
-    <text x="190" y="120" font-family="'Batang',serif" font-size="14" fill="#f0ebe3" filter="url(#textC)">${verdict}</text>
+    <foreignObject x="190" y="102" width="348" height="34">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;align-items:center;width:100%;height:100%;margin:0;padding:0 8px 0 0;box-sizing:border-box;font-family:'Batang',serif;font-size:12px;font-weight:700;line-height:1.35;color:#f0ebe3;word-break:keep-all;overflow-wrap:break-word;overflow:hidden;text-shadow:0 0 10px rgba(255,54,94,0.22);">${verdict}</div>
+    </foreignObject>
   </g>
   <text x="42" y="164" font-family="'Batang',serif" font-size="13" fill="#f0ebe3" font-weight="700">${actor}</text>
   <text x="42" y="184" font-family="'Batang',serif" font-size="10" fill="#b8a47a">영력</text>
@@ -188,7 +222,7 @@ function buildBaseSvg(sender, text) {
   <text x="${WIDTH/2}" y="29" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif" font-size="15" fill="${T.nameText}" text-anchor="middle" font-weight="bold">【 ${safeSender} 】</text>
   <foreignObject x="${PAD_X}" y="${PAD_TOP-8}" width="${WIDTH-PAD_X*2}" height="${contentH+16}">
     <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;justify-content:center;align-items:center;width:100%;min-height:100%;margin:0;padding:0;">
-      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;font-size:20px;color:${T.bodyText};text-align:center;line-height:1.55;word-break:keep-all;overflow-wrap:break-word;white-space:pre-wrap;text-shadow:0 0 12px ${T.borderGlow};">${safeText}</div>
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;font-size:16px;color:${T.bodyText};text-align:center;line-height:1.5;word-break:keep-all;overflow-wrap:break-word;white-space:pre-wrap;overflow:hidden;text-shadow:0 0 10px ${T.borderGlow};">${safeText}</div>
     </div>
   </foreignObject>
 </svg>`;
@@ -213,7 +247,7 @@ function buildArcadeIdleSvg(lcdMsg) {
   const neonBlue = '#5ce1ff';
   const glassTop = '#1a2a5a';
   const glassBot = '#0a1535';
-  const safeMsg = escapeXml(lcdMsg || '동전을 넣어주세요');
+  const safeMsg = lcdMsg || '동전을 넣어주세요';
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${WIDTH}" height="${H}" viewBox="0 0 ${WIDTH} ${H}" xmlns="http://www.w3.org/2000/svg">
@@ -454,11 +488,11 @@ function buildAlertSvg(sender, text, level, label) {
   const badge = escapeXml(label || L.badge);
   const safeSender = escapeXml(sender || '경계관리청');
   const safeText = escapeXml(text || '…');
-  const lineCount = estimateLineCount(text, 20);
-  const PAD_TOP = 88;
-  const PAD_BOTTOM = 52;
-  const contentH = lineCount * 30;
-  const H = Math.max(200, PAD_TOP + contentH + PAD_BOTTOM);
+  const lineCount = estimateLineCount(text, 42);
+  const PAD_TOP = 78;
+  const PAD_BOTTOM = 36;
+  const contentH = lineCount * 28;
+  const H = Math.max(150, PAD_TOP + contentH + PAD_BOTTOM);
   const boxH = H - 28;
   const npW = Math.min(320, Math.max(160, sender.length * 17 + 56));
   const npX = (WIDTH - npW) / 2;
@@ -490,23 +524,23 @@ function buildAlertSvg(sender, text, level, label) {
   <path d="M${WIDTH-38} ${boxH+18} L${WIDTH-10} ${boxH+18} L${WIDTH-10} ${boxH+6}" stroke="${DANCHEONG.blue}" stroke-width="2" fill="none"/>
 
   <!-- 기관명 -->
-  <text x="${WIDTH/2}" y="48" font-family="'Malgun Gothic',sans-serif" font-size="10" fill="${DANCHEONG.gold}" text-anchor="middle" letter-spacing="3" opacity="0.85">대한민국 경계관리청</text>
+  <text x="${WIDTH/2}" y="48" font-family="'Batang','Nanum Myeongjo',serif" font-size="10" fill="${DANCHEONG.gold}" text-anchor="middle" letter-spacing="3" opacity="0.85">대한민국 경계관리청</text>
 
   <!-- 발신 이름표 -->
-  <rect x="${npX}" y="54" width="${npW}" height="30" rx="4" fill="#120608" stroke="${L.accent}" stroke-width="1.5"/>
-  <text x="${WIDTH/2}" y="74" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif" font-size="14" fill="${L.accent}" text-anchor="middle" font-weight="bold">【 ${safeSender} 】</text>
+  <rect x="${npX}" y="54" width="${npW}" height="27" rx="4" fill="#120608" stroke="${L.accent}" stroke-width="1.5"/>
+  <text x="${WIDTH/2}" y="72" font-family="'Batang','Nanum Myeongjo',serif" font-size="13" fill="${L.accent}" text-anchor="middle" font-weight="bold">【 ${safeSender} 】</text>
 
   <!-- 본문 -->
-  <foreignObject x="36" y="${PAD_TOP}" width="${WIDTH-72}" height="${contentH + 12}">
-    <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;justify-content:center;align-items:center;width:100%;min-height:100%;margin:0;padding:0;">
-      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;font-size:18px;color:#f0ebe3;text-align:center;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;white-space:pre-wrap;text-shadow:0 0 14px ${L.glow};">${safeText}</div>
+  <foreignObject x="36" y="${PAD_TOP}" width="${WIDTH-72}" height="${contentH + 8}">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="display:flex;justify-content:center;align-items:center;width:100%;height:100%;margin:0;padding:0 18px;box-sizing:border-box;overflow:hidden;">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:'Batang','Nanum Myeongjo',serif;font-size:14px;font-weight:700;color:#f0ebe3;text-align:center;line-height:1.42;word-break:keep-all;overflow-wrap:break-word;white-space:pre-wrap;max-width:100%;max-height:100%;overflow:hidden;text-shadow:0 0 8px ${L.glow};">${safeText}</div>
     </div>
   </foreignObject>
 
   <!-- 하단 구분선 + 등급 배지 -->
   <line x1="36" y1="${H-36}" x2="${WIDTH-36}" y2="${H-36}" stroke="${DANCHEONG.gold}" stroke-width="0.8" opacity="0.45"/>
   <rect x="${WIDTH/2 - 36}" y="${H-30}" width="72" height="22" rx="4" fill="${L.accent}" opacity="0.15" stroke="${L.accent}" stroke-width="1"/>
-  <text x="${WIDTH/2}" y="${H-15}" font-family="'Malgun Gothic',monospace" font-size="12" fill="${L.accent}" text-anchor="middle" font-weight="bold" letter-spacing="2">${badge}</text>
+  <text x="${WIDTH/2}" y="${H-15}" font-family="'Batang','Nanum Myeongjo',serif" font-size="12" fill="${L.accent}" text-anchor="middle" font-weight="bold" letter-spacing="2">${badge}</text>
 </svg>`;
 }
 
