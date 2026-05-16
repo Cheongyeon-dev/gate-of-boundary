@@ -99,6 +99,41 @@
         var(--shadow);
     }
 
+    .hero-visual {
+      position: relative;
+      overflow: hidden;
+      margin: 0 0 30px;
+      background: #020406;
+      border: 1px solid rgba(194, 154, 66, 0.18);
+      box-shadow:
+        0 0 0 1px rgba(159, 35, 52, 0.16),
+        0 26px 70px rgba(0, 0, 0, 0.7);
+    }
+
+    .hero-visual img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .scene-copy {
+      position: relative;
+      width: min(72%, 720px);
+      margin: 0 auto 22px;
+      color: #fff3df;
+      font-family: "Nanum Myeongjo", "Batang", serif;
+      font-size: clamp(16px, 2.3vw, 20px);
+      font-weight: 800;
+      line-height: 1.8;
+      text-align: center;
+      text-shadow: 0 0 18px rgba(159, 35, 52, 0.42);
+    }
+
+    .scene-copy.encounter-copy {
+      width: min(76%, 720px);
+      margin: 34px 0 8px auto;
+    }
+
     .signal-panel::before {
       content: "";
       position: absolute;
@@ -110,22 +145,10 @@
       opacity: 0.45;
     }
 
-    .signal-copy {
-      position: relative;
-      margin: 0 0 16px;
-      color: #fff3df;
-      font-family: "Nanum Myeongjo", "Batang", serif;
-      font-size: clamp(16px, 2.4vw, 21px);
-      font-weight: 800;
-      line-height: 1.7;
-      text-shadow: 0 0 18px rgba(159, 35, 52, 0.42);
-    }
-
     .signal-stack {
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: 12px;
     }
 
     .intro-card,
@@ -173,13 +196,15 @@
     }
 
     .signal-frame.main-alert {
+      width: min(80%, 820px);
+      margin: 0 auto 0 6%;
       padding: 12px;
     }
 
     .signal-frame.combat-alert {
-      width: min(86%, 780px);
+      width: min(76%, 720px);
       margin-left: auto;
-      margin-top: -2px;
+      margin-top: 0;
       border-color: rgba(159, 35, 52, 0.24);
     }
 
@@ -215,6 +240,35 @@
       margin-top: 12px;
       color: #9fb2b2;
       font-size: 13px;
+    }
+
+    .terminal-guide {
+      margin: 0;
+      padding: 18px 20px;
+      background:
+        linear-gradient(180deg, rgba(5, 14, 18, 0.94), rgba(2, 7, 10, 0.98)),
+        radial-gradient(circle at 0% 0%, rgba(194, 154, 66, 0.1), transparent 24rem);
+      border: 1px solid rgba(194, 154, 66, 0.2);
+      border-left: 5px solid var(--gold);
+      color: #d9e2df;
+      box-shadow: var(--shadow);
+    }
+
+    .terminal-guide h2 {
+      margin: 0 0 10px;
+      color: #f0d28a;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .terminal-guide p {
+      margin: 0 0 8px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .terminal-guide p:last-child {
+      margin-bottom: 0;
     }
 
     .actions {
@@ -374,6 +428,16 @@
         width: 100%;
       }
 
+      .signal-frame.main-alert {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .scene-copy,
+      .scene-copy.encounter-copy {
+        width: 100%;
+      }
+
       .hero {
         padding-top: 42px;
       }
@@ -389,8 +453,11 @@
     <p class="subtitle">한국 무속 기반 현대퇴마 시뮬레이션</p>
 
     <section class="signal-panel" aria-label="관리청 긴급 상황 미리보기">
-      <p class="signal-copy">해운대 마린시티의 경계 수치가 새벽부터 비정상적으로 치솟았다. 부산지부 단말이 붉게 점멸하고, 경계관리청장 청연의 긴급 지시가 먼저 도착한다.</p>
+      <figure class="hero-visual">
+        <img src="assets/hero-cheongyeon.png" alt="부산 경계관리청장 청연 히어로 이미지" />
+      </figure>
       <div class="signal-stack">
+        <p class="scene-copy">해운대 마린시티의 경계 수치가 새벽부터 비정상적으로 치솟았다. 부산지부 단말이 붉게 점멸하고, 경계관리청장 청연의 긴급 지시가 먼저 도착한다.</p>
         <div class="signal-frame main-alert">
           <strong>Emergency Directive</strong>
           <img
@@ -398,6 +465,7 @@
             alt="경계관리청장 청연 긴급 경고 UI"
           />
         </div>
+        <p class="scene-copy encounter-copy">그 직후, 장산 쪽 폐쇄 등산로에서 실종자의 목소리가 같은 문장을 반복하기 시작했다.</p>
         <div class="signal-frame combat-alert">
           <strong>Boundary Tactics</strong>
           <img
@@ -427,6 +495,14 @@
           <a class="btn" href="#world">세계관 보기</a>
           <a class="btn" href="#ui">UI 미리보기</a>
         </div>
+      </article>
+    </section>
+
+    <section aria-label="경계관리청 단말기 지침">
+      <article class="terminal-guide">
+        <h2>⚠️ 경계관리청 단말기 지침</h2>
+        <p>본 시스템은 창사의 안전한 현장 조사를 위해 괴이의 시각적 이미지나 일러스트를 직접 출력하지 않으며, 오직 관리청 단말의 정보 데이터만 제공합니다.</p>
+        <p>전투 장면은 귀신 이미지, 점프스케어, 혐오 요소 없이 진행되므로 안심하고 시작하실 수 있습니다.</p>
       </article>
     </section>
 
