@@ -6,8 +6,8 @@
   <title>경계의 문</title>
   <style>
     :root {
-      --bg: #061116;
-      --bg2: #0b1e25;
+      --bg: #02070a;
+      --bg2: #061017;
       --panel: #f4efe6;
       --paper: #fffaf0;
       --ink: #172025;
@@ -15,8 +15,8 @@
       --red: #9f2334;
       --blue: #1b6875;
       --gold: #c29a42;
-      --line: rgba(244, 239, 230, 0.18);
-      --shadow: 0 18px 50px rgba(0, 0, 0, 0.34);
+      --line: rgba(244, 239, 230, 0.14);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.62);
     }
 
     * {
@@ -30,9 +30,9 @@
     body {
       margin: 0;
       background:
-        radial-gradient(circle at 20% 0%, rgba(27, 104, 117, 0.35), transparent 28rem),
-        radial-gradient(circle at 80% 10%, rgba(159, 35, 52, 0.18), transparent 24rem),
-        linear-gradient(180deg, var(--bg), #03080b 68%);
+        radial-gradient(circle at 18% 0%, rgba(27, 104, 117, 0.18), transparent 26rem),
+        radial-gradient(circle at 82% 8%, rgba(159, 35, 52, 0.22), transparent 24rem),
+        linear-gradient(180deg, var(--bg), #010304 72%);
       color: var(--panel);
       font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
       line-height: 1.72;
@@ -85,29 +85,47 @@
 
     .signal-panel {
       margin-top: 34px;
+      position: relative;
+      overflow: hidden;
       padding: 18px;
       background:
-        linear-gradient(180deg, rgba(8, 22, 28, 0.92), rgba(4, 10, 14, 0.98)),
-        radial-gradient(circle at 28% 12%, rgba(159, 35, 52, 0.18), transparent 26rem);
-      border: 1px solid var(--line);
+        radial-gradient(circle at 50% 0%, rgba(159, 35, 52, 0.24), transparent 30rem),
+        linear-gradient(180deg, rgba(5, 12, 17, 0.98), rgba(1, 4, 7, 0.99));
+      border: 1px solid rgba(194, 154, 66, 0.18);
       border-top: 3px solid var(--red);
-      box-shadow: var(--shadow);
+      box-shadow:
+        0 0 0 1px rgba(159, 35, 52, 0.22),
+        0 0 34px rgba(159, 35, 52, 0.22),
+        var(--shadow);
+    }
+
+    .signal-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 5px),
+        linear-gradient(90deg, rgba(159, 35, 52, 0.2), transparent 20%, transparent 80%, rgba(27, 104, 117, 0.16));
+      opacity: 0.45;
     }
 
     .signal-copy {
+      position: relative;
       margin: 0 0 16px;
-      color: #f2e8d8;
+      color: #fff3df;
       font-family: "Nanum Myeongjo", "Batang", serif;
       font-size: clamp(16px, 2.4vw, 21px);
+      font-weight: 800;
       line-height: 1.7;
-      text-shadow: 0 0 18px rgba(159, 35, 52, 0.22);
+      text-shadow: 0 0 18px rgba(159, 35, 52, 0.42);
     }
 
-    .signal-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      align-items: start;
+    .signal-stack {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     .intro-card,
@@ -118,8 +136,10 @@
     }
 
     .intro-card {
-      background: linear-gradient(180deg, rgba(244, 239, 230, 0.98), rgba(229, 219, 202, 0.98));
-      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(10, 20, 25, 0.96), rgba(4, 10, 13, 0.98)),
+        radial-gradient(circle at 0% 0%, rgba(194, 154, 66, 0.12), transparent 24rem);
+      color: #e9e1d2;
       padding: 28px;
       border-left: 5px solid var(--gold);
     }
@@ -134,7 +154,7 @@
     }
 
     .hook {
-      color: #6d1825;
+      color: #f0c16b;
       font-weight: 900;
     }
 
@@ -145,9 +165,22 @@
     }
 
     .signal-frame {
-      background: rgba(3, 7, 10, 0.76);
-      border: 1px solid rgba(244, 239, 230, 0.12);
+      position: relative;
+      background: rgba(1, 4, 7, 0.86);
+      border: 1px solid rgba(194, 154, 66, 0.16);
       padding: 10px;
+      box-shadow: 0 0 24px rgba(159, 35, 52, 0.15);
+    }
+
+    .signal-frame.main-alert {
+      padding: 12px;
+    }
+
+    .signal-frame.combat-alert {
+      width: min(86%, 780px);
+      margin-left: auto;
+      margin-top: -2px;
+      border-color: rgba(159, 35, 52, 0.24);
     }
 
     .signal-frame strong {
@@ -155,8 +188,13 @@
       margin-bottom: 8px;
       color: #f0d28a;
       font-size: 12px;
+      font-weight: 900;
       letter-spacing: 0.14em;
       text-transform: uppercase;
+    }
+
+    .signal-frame.combat-alert strong {
+      color: #e54c61;
     }
 
     .notice-card img,
@@ -167,6 +205,10 @@
       height: auto;
       background: #050505;
       border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .signal-frame.main-alert img {
+      box-shadow: 0 0 28px rgba(159, 35, 52, 0.24);
     }
 
     .note {
@@ -324,9 +366,12 @@
     }
 
     @media (max-width: 840px) {
-      .signal-grid,
       .preview-grid {
         grid-template-columns: 1fr;
+      }
+
+      .signal-frame.combat-alert {
+        width: 100%;
       }
 
       .hero {
@@ -345,18 +390,18 @@
 
     <section class="signal-panel" aria-label="관리청 긴급 상황 미리보기">
       <p class="signal-copy">해운대 마린시티의 경계 수치가 새벽부터 비정상적으로 치솟았다. 부산지부 단말이 붉게 점멸하고, 경계관리청장 청연의 긴급 지시가 먼저 도착한다.</p>
-      <div class="signal-grid">
-        <div class="signal-frame">
+      <div class="signal-stack">
+        <div class="signal-frame main-alert">
           <strong>Emergency Directive</strong>
           <img
-            src="https://lorebox-worker.levantarlos.workers.dev/?theme=alert&sender=%EA%B2%BD%EA%B3%84%EA%B4%80%EB%A6%AC%EC%B2%AD%EC%9E%A5+%EC%B2%AD%EC%97%B0&text=%ED%95%B4%EC%9A%B4%EB%8C%80+%EB%A7%88%EB%A6%B0%EC%8B%9C%ED%8B%B0+%EC%9D%BC%EB%8C%80+%EA%B2%BD%EA%B3%84+%EB%B6%95%EA%B4%B4+%EC%A7%95%ED%9B%84+%ED%99%95%EC%9D%B8.+%ED%98%84%EC%9E%A5+%EC%B0%BD%EC%82%AC+%EC%A0%84%EC%9B%90%2C+%EC%A6%89%EC%8B%9C+%EB%B4%89%EC%87%84%EC%84%A0%EC%9C%BC%EB%A1%9C+%EC%A7%91%EA%B2%B0%ED%95%98%EC%8B%AD%EC%8B%9C%EC%98%A4.&level=urgent&label=%EC%9E%AC%ED%95%B4+%EC%98%88%EB%B9%84+%EA%B2%BD%EB%B3%B4"
+            src="https://lorebox-worker.levantarlos.workers.dev/?theme=alert&sender=%EA%B2%BD%EA%B3%84%EA%B4%80%EB%A6%AC%EC%B2%AD%EC%9E%A5+%EC%B2%AD%EC%97%B0&text=%EB%A7%88%EB%A6%B0%EC%8B%9C%ED%8B%B0+%EA%B2%BD%EA%B3%84+%EB%B6%95%EA%B4%B4+%EC%A7%95%ED%9B%84.+%EC%A0%84+%EC%B0%BD%EC%82%AC%2C+%EC%A6%89%EC%8B%9C+%EB%B4%89%EC%87%84%EC%84%A0%EC%9C%BC%EB%A1%9C+%EC%A7%91%EA%B2%B0.&level=urgent&label=%EC%9E%AC%ED%95%B4+%EC%98%88%EB%B9%84+%EA%B2%BD%EB%B3%B4"
             alt="경계관리청장 청연 긴급 경고 UI"
           />
         </div>
-        <div class="signal-frame">
+        <div class="signal-frame combat-alert">
           <strong>Boundary Tactics</strong>
           <img
-            src="https://lorebox-worker.levantarlos.workers.dev/?theme=combat&mode=engage&turn=01&target=%EC%B0%BD%EA%B7%80&id=BMA-0199&risk=1%EA%B8%89&intro=%EC%A0%96%EC%9D%80+%EC%9E%A5%EC%A7%80%EB%AC%B8+%EB%84%88%EB%A8%B8%EB%A1%9C%2C+%EA%B5%B6%EC%A3%BC%EB%A6%B0+%EC%9B%90%ED%95%9C%EC%9D%B4+%EC%82%AC%EB%9E%8C%EC%9D%98+%EB%AA%A9%EC%86%8C%EB%A6%AC%EB%A5%BC+%ED%9D%89%EB%82%B4+%EB%82%B8%EB%8B%A4.&decision=%EC%A0%95%EC%B2%B4+%ED%99%95%EC%9D%B8+%C2%B7+%EA%B1%B0%EB%A6%AC+%ED%99%95%EB%B3%B4+%C2%B7+%EC%A7%80%EC%9B%90+%EC%9A%94%EC%B2%AD"
+            src="https://lorebox-worker.levantarlos.workers.dev/?theme=combat&mode=engage&turn=01&target=%EC%B0%BD%EA%B7%80&id=BMA-0199&risk=1%EA%B8%89&intro=%EC%82%AC%EB%9E%8C+%EB%AA%A9%EC%86%8C%EB%A6%AC%EA%B0%80+%EC%A0%96%EC%9D%80+%EC%82%B0%EA%B8%B8%EC%9D%84+%EB%94%B0%EB%9D%BC+%EB%82%B4%EB%A0%A4%EC%98%A8%EB%8B%A4.&decision=%EC%A0%95%EC%B2%B4+%ED%99%95%EC%9D%B8+%C2%B7+%EA%B1%B0%EB%A6%AC+%ED%99%95%EB%B3%B4+%C2%B7+%EC%A7%80%EC%9B%90+%EC%9A%94%EC%B2%AD"
             alt="창귀 전투 대치 UI"
           />
         </div>
@@ -398,7 +443,7 @@
         <article class="preview">
           <h3>전투 대치</h3>
           <img
-            src="https://lorebox-worker.levantarlos.workers.dev/?theme=combat&mode=engage&turn=01&target=%EC%B0%BD%EA%B7%80&id=BMA-0199&risk=1%EA%B8%89&intro=%EC%A0%96%EC%9D%80+%EC%9E%A5%EC%A7%80%EB%AC%B8+%EB%84%88%EB%A8%B8%EB%A1%9C%2C+%EA%B5%B6%EC%A3%BC%EB%A6%B0+%EC%9B%90%ED%95%9C%EC%9D%B4+%EC%82%AC%EB%9E%8C%EC%9D%98+%EB%AA%A9%EC%86%8C%EB%A6%AC%EB%A5%BC+%ED%9D%89%EB%82%B4+%EB%82%B8%EB%8B%A4.&decision=%EC%A0%95%EC%B2%B4+%ED%99%95%EC%9D%B8+%C2%B7+%EA%B1%B0%EB%A6%AC+%ED%99%95%EB%B3%B4+%C2%B7+%EC%A7%80%EC%9B%90+%EC%9A%94%EC%B2%AD"
+            src="https://lorebox-worker.levantarlos.workers.dev/?theme=combat&mode=engage&turn=01&target=%EC%B0%BD%EA%B7%80&id=BMA-0199&risk=1%EA%B8%89&intro=%EC%82%AC%EB%9E%8C+%EB%AA%A9%EC%86%8C%EB%A6%AC%EA%B0%80+%EC%A0%96%EC%9D%80+%EC%82%B0%EA%B8%B8%EC%9D%84+%EB%94%B0%EB%9D%BC+%EB%82%B4%EB%A0%A4%EC%98%A8%EB%8B%A4.&decision=%EC%A0%95%EC%B2%B4+%ED%99%95%EC%9D%B8+%C2%B7+%EA%B1%B0%EB%A6%AC+%ED%99%95%EB%B3%B4+%C2%B7+%EC%A7%80%EC%9B%90+%EC%9A%94%EC%B2%AD"
             alt="전투 대치 UI"
           />
           <p>첫 대치와 전투 시작을 카드 형태로 표시합니다.</p>
