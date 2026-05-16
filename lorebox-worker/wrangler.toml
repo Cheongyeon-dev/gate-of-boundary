@@ -1,0 +1,10 @@
+name = "lorebox-worker"
+main = "src/index.js"
+compatibility_date = "2025-05-15"
+
+# workers.dev 전용 (hyepae.dev routes 미연결)
+workers_dev = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"

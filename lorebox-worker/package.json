@@ -1,0 +1,13 @@
+{
+  "name": "lorebox-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lunatalk lore/shop dialogue box image renderer (SVG via Cloudflare Workers)",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.14.0"
+  }
+}

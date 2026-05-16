@@ -1,0 +1,5 @@
+{
+  "_readme": "iconId = PNG 파일명(확장자 제외). S급 인형 결과 URL에 &iconId=동일값",
+  "Doll_Seoha": { "label": "채서하", "item": "채서하 인형" },
+  "Doll_Cheongyeon": { "label": "청연", "item": "청연 인형" }
+}
