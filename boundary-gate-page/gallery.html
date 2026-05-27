@@ -71,10 +71,10 @@
         <div class="code-table glass-panel" style="margin-bottom: 24px;">
           <div class="code-row"><b>A01</b><span>롯데월드</span></div>
           <div class="code-row"><b>A03</b><span>요트</span></div>
-          <div class="code-row"><b>A04</b><span>수족관</span></div>
-          <div class="code-row"><b>B01</b><span>해변</span></div>
+          <div class="code-row"><b>A04</b><span>해변 수영복</span></div>
+          <div class="code-row"><b>B01</b><span>해안 산책</span></div>
           <div class="code-row"><b>C02</b><span>카페</span></div>
-          <div class="code-row"><b>F04</b><span>해변 바캉스</span></div>
+          <div class="code-row"><b>F04</b><span>아쿠아리움</span></div>
           <div class="code-row"><b>G01</b><span>식사</span></div>
           <div class="code-row"><b>G02</b><span>아이스크림</span></div>
           <div class="code-row"><b>G03</b><span>캔맥주</span></div>
@@ -103,7 +103,6 @@
           <div class="code-row"><b>15</b><span>위기</span></div>
           <div class="code-row"><b>16</b><span>침잠</span></div>
           <div class="code-row"><b>17</b><span>영력 방출</span></div>
-          <div class="code-row"><b>20</b><span>비에 젖음</span></div>
         </div>
       </section>
 
@@ -146,15 +145,14 @@
             <option value="15">15 (위기)</option>
             <option value="16">16 (침잠)</option>
             <option value="17">17 (영력 방출)</option>
-            <option value="20">20 (비에 젖음)</option>
             <option value="A01">A01 (롯데월드)</option>
             <option value="A03">A03 (요트)</option>
-            <option value="A04">A04 (수족관)</option>
-            <option value="B01">B01 (해변)</option>
+            <option value="A04">A04 (해변 수영복)</option>
+            <option value="B01">B01 (해안 산책)</option>
             <option value="C02">C02 (카페)</option>
             <option value="E01">E01 (바다 전투)</option>
             <option value="E02">E02 (숲 전투)</option>
-            <option value="F04">F04 (해변 바캉스)</option>
+            <option value="F04">F04 (아쿠아리움)</option>
             <option value="G01">G01 (식사)</option>
             <option value="G02">G02 (아이스크림)</option>
             <option value="G03">G03 (캔맥주)</option>
@@ -217,7 +215,7 @@
     // 허용된 상황 코드 (특수 장소 및 감정 코드)
     const allowedSituationPrefixes = [
       'A01', 'A03', 'A04', 'B01', 'C02', 'F04', 'G01', 'G02', 'G03', 'G04', 'E01', 'E02',
-      '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '20'
+      '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17'
     ];
 
     const showToast = (message) => {
