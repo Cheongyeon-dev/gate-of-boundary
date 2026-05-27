@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>캐릭터 에디터 | 경계의 문</title>
+  <link rel="stylesheet" href="site.css" />
+  <style>
+    .editor-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    
+    .editor-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .editor-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 24px;
+      position: sticky;
+      top: 80px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      color: #f0d28a;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .form-group input, .form-group textarea {
+      background: rgba(5, 14, 18, 0.86);
+      border: 1px solid rgba(126, 226, 255, 0.2);
+      color: #eafcff;
+      padding: 12px;
+      border-radius: 8px;
+      font-family: inherit;
+    }
+    
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .btn-save {
+      background: linear-gradient(90deg, #7d1d2d, #b18332);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+
+    .btn-download {
+      background: linear-gradient(90deg, #0b5e89, #1b6875);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .char-item {
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .char-item:hover, .char-item.active {
+      background: rgba(126, 226, 255, 0.1);
+      border-color: rgba(126, 226, 255, 0.4);
+    }
+    
+    .char-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .char-item-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .char-item-info strong {
+      color: #eafcff;
+      font-size: 18px;
+    }
+    
+    .char-item-info span {
+      color: #9fb2b2;
+      font-size: 13px;
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #c29a42;
+      color: #02070a;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="dex-shell">
+  <div class="site-shell">
+    <nav class="top-nav">
+      <a class="brand" href="index.html">
+        경계의 문
+        <small>Character Editor</small>
+      </a>
+      <div class="nav-links">
+        <a href="characters.html">등장인물 페이지로 돌아가기</a>
+      </div>
+    </nav>
+
+    <main class="wrap" style="padding: 40px 0;">
+      <div class="section-head">
+        <h2>캐릭터 프로필 에디터</h2>
+        <p>캐릭터 정보를 수정하고 JSON 파일을 다운로드하여 덮어쓰세요.</p>
+      </div>
+
+      <div class="editor-container">
+        <div class="editor-list">
+          <div id="char-list" style="display: flex; flex-direction: column; gap: 12px;">
+            <!-- JS로 렌더링 -->
+          </div>
+          <button class="btn-save" onclick="addNewChar()" style="margin-top: 12px; background: rgba(126, 226, 255, 0.1); color: #eafcff; border: 1px dashed rgba(126, 226, 255, 0.3);">+ 새 캐릭터 추가</button>
+        </div>
+
+        <div class="glass-panel editor-form" id="editor-form" style="display: none;">
+          <h3 id="form-title" style="margin: 0 0 16px; color: #f5e6c8; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;"></h3>
+          
+          <div class="form-group">
+            <label>캐릭터 ID (영문, URL에 사용)</label>
+            <input type="text" id="input-id" placeholder="cheongyeon">
+          </div>
+
+          <div class="form-group">
+            <label>소속/상태 라벨 (Eyebrow)</label>
+            <input type="text" id="input-eyebrow" placeholder="Verified Identity · Busan Branch">
+          </div>
+          
+          <div class="form-group">
+            <label>캐릭터 이름</label>
+            <input type="text" id="input-name">
+          </div>
+
+          <div class="form-group">
+            <label>좌측 일러스트 경로 (없으면 우측 카드 사용)</label>
+            <input type="text" id="input-leftImage" placeholder="assets/characters/cheongyeon-full.png">
+          </div>
+
+          <div class="form-group">
+            <label>우측 신분증 카드 경로</label>
+            <input type="text" id="input-image" placeholder="assets/characters/cheongyeon-id-card.png">
+          </div>
+          
+          <div class="form-group">
+            <label>상세 설명 (Description)</label>
+            <textarea id="input-description"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>태그 (쉼표로 구분)</label>
+            <input type="text" id="input-tags" placeholder="1단 창사, 경계관리청, ACTIVE">
+          </div>
+          
+          <div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 8px 0;"></div>
+          
+          <div class="form-group">
+            <label>역할 (Role)</label>
+            <input type="text" id="input-role">
+          </div>
+          
+          <div class="form-group">
+            <label>능력/기호 (Signal)</label>
+            <input type="text" id="input-signal">
+          </div>
+          
+          <div class="form-group">
+            <label>특이사항 (Note)</label>
+            <input type="text" id="input-note">
+          </div>
+
+          <button class="btn-save" id="btn-save" onclick="saveCurrent()">현재 캐릭터 임시 저장</button>
+          <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <button class="btn-download" onclick="downloadJSON()">수정된 characters.json 파일 다운로드</button>
+            <small style="color: #9fb2b2; text-align: center;">다운로드 받은 파일을 boundary-gate-page/assets/ 폴더에 덮어쓰세요.</small>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <div class="toast" id="toast">저장되었습니다.</div>
+
+  <script>
+    let characters = [];
+    let currentIndex = -1;
+
+    // 초기 데이터 로드
+    fetch('assets/characters.json')
+      .then(res => res.json())
+      .then(data => {
+        characters = data;
+        renderList();
+      })
+      .catch(err => {
+        alert('데이터를 불러오는데 실패했습니다. characters.json 파일이 존재하는지 확인해주세요.');
+        console.error(err);
+      });
+
+    function renderList() {
+      const listEl = document.getElementById('char-list');
+      listEl.innerHTML = characters.map((char, idx) => `
+        <div class="char-item ${idx === currentIndex ? 'active' : ''}" onclick="selectChar(${idx})">
+          <img src="${char.image}" alt="${char.name}">
+          <div class="char-item-info">
+            <strong>${char.name}</strong>
+            <span>${char.id}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectChar(index) {
+      // 다른 캐릭터 선택 시 현재 입력된 내용을 자동 저장
+      if (currentIndex !== -1) {
+        const prevChar = characters[currentIndex];
+        prevChar.id = document.getElementById('input-id').value;
+        prevChar.eyebrow = document.getElementById('input-eyebrow').value;
+        prevChar.name = document.getElementById('input-name').value;
+        prevChar.leftImage = document.getElementById('input-leftImage').value;
+        prevChar.image = document.getElementById('input-image').value;
+        prevChar.description = document.getElementById('input-description').value;
+        prevChar.tags = document.getElementById('input-tags').value.split(',').map(s => s.trim()).filter(Boolean);
+        prevChar.role = document.getElementById('input-role').value;
+        prevChar.signal = document.getElementById('input-signal').value;
+        prevChar.note = document.getElementById('input-note').value;
+      }
+
+      currentIndex = index;
+      const char = characters[index];
+      
+      document.getElementById('editor-form').style.display = 'flex';
+      document.getElementById('form-title').innerText = `${char.name} 정보 수정`;
+      
+      document.getElementById('input-id').value = char.id || '';
+      document.getElementById('input-eyebrow').value = char.eyebrow || '';
+      document.getElementById('input-name').value = char.name || '';
+      document.getElementById('input-leftImage').value = char.leftImage || '';
+      document.getElementById('input-image').value = char.image || '';
+      document.getElementById('input-description').value = char.description || '';
+      document.getElementById('input-tags').value = (char.tags || []).join(', ');
+      
+      document.getElementById('input-role').value = char.role || '';
+      document.getElementById('input-signal').value = char.signal || '';
+      document.getElementById('input-note').value = char.note || '';
+      
+      renderList();
+    }
+
+    function saveCurrent() {
+      if (currentIndex === -1) return;
+      
+      const char = characters[currentIndex];
+      
+      char.id = document.getElementById('input-id').value;
+      char.eyebrow = document.getElementById('input-eyebrow').value;
+      char.name = document.getElementById('input-name').value;
+      char.leftImage = document.getElementById('input-leftImage').value;
+      char.image = document.getElementById('input-image').value;
+      char.description = document.getElementById('input-description').value;
+      char.tags = document.getElementById('input-tags').value.split(',').map(s => s.trim()).filter(Boolean);
+      
+      char.role = document.getElementById('input-role').value;
+      char.signal = document.getElementById('input-signal').value;
+      char.note = document.getElementById('input-note').value;
+      
+      renderList();
+      showToast('임시 저장되었습니다. 완료 후 꼭 다운로드하여 덮어쓰세요!');
+    }
+
+    function addNewChar() {
+      if (currentIndex !== -1) {
+        saveCurrent();
+      }
+      
+      const newChar = {
+        id: "new_char_" + Date.now(),
+        name: "새 캐릭터",
+        eyebrow: "New Record",
+        leftImage: "",
+        image: "assets/characters/default-id-card.png",
+        description: "",
+        tags: ["신규", "미확인", "ACTIVE"],
+        role: "",
+        signal: "",
+        note: ""
+      };
+      
+      characters.push(newChar);
+      selectChar(characters.length - 1);
+      showToast('새 캐릭터가 추가되었습니다.');
+    }
+
+    function downloadJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(characters, null, 2));
+      const downloadAnchorNode = document.createElement('a');
+      downloadAnchorNode.setAttribute("href",     dataStr);
+      downloadAnchorNode.setAttribute("download", "characters.json");
+      document.body.appendChild(downloadAnchorNode);
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
+      showToast('다운로드가 시작되었습니다.');
+    }
+    
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

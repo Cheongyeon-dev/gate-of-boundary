@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>등장인물 | 경계의 문</title>
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <div class="site-shell">
+    <nav class="top-nav">
+      <a class="brand" href="index.html">
+        경계의 문
+        <small>Busan Branch Archive</small>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">대문</a>
+        <a href="characters.html">등장인물</a>
+        <a href="world.html">세계관</a>
+        <a href="dex.html">괴이체 도감</a>
+        <a href="gallery.html">에셋 갤러리</a>
+      </div>
+    </nav>
+
+    <header class="hero-blue wrap">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Korea Boundary Administration Bureau</p>
+          <h1 class="hero-title">Haeundae<br>Personnel</h1>
+          <p class="hero-copy">부산 경계관리청 인사기록 열람 단말. 바다빛 유리창 너머, 경계의 문을 마주하는 창사들의 기록.</p>
+          <div class="radio-strip"><span>[부산지부] 창사 등록 기록 갱신 · 해운대 봉쇄선 유지 · 마린시티 경계 수치 안정화 대기 · 장산 방면 미확인 음성 반응 보관 중</span></div>
+        </div>
+        <div class="glass-panel hero-card">
+          <img src="assets/characters/cheongyeon-id-card.png" alt="청연 프로필 카드" />
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section wrap">
+        <div class="section-head">
+          <h2>등장인물</h2>
+          <p>해운대의 빛과 관리청의 기록 사이, 경계의 문을 마주한 창사들의 인사기록.</p>
+        </div>
+        <div class="character-grid">
+          <a class="feed-card" href="#cheongyeon">
+            <img src="assets/characters/cheongyeon-id-card.png" alt="청연 카드" />
+            <div><strong>청연</strong><span>2단 창사 · 부산청장 · ACTIVE</span></div>
+          </a>
+          <a class="feed-card" href="#chaeseoha">
+            <img src="assets/characters/chaeseoha-id-card.png" alt="채서하 카드" />
+            <div><strong>채서하</strong><span>3급 창사 · 경계관리청 · ACTIVE</span></div>
+          </a>
+          <a class="feed-card" href="#catherine">
+            <img src="assets/characters/catherine-id-card.png" alt="캐서린 카드" />
+            <div><strong>캐서린</strong><span>1단 창사 · 무소속 · ACTIVE</span></div>
+          </a>
+          <a class="feed-card" href="#shinahyeon">
+            <img src="assets/characters/shinahyeon-id-card.png" alt="신아현 카드" />
+            <div><strong>신아현</strong><span>훈련생 · 경계관리청 · ACTIVE</span></div>
+          </a>
+          <a class="feed-card" href="#baekyuha">
+            <img src="assets/characters/baekyuha-id-card.png" alt="백유하 카드" />
+            <div><strong>백유하</strong><span>1단 창사 · 경계관리청 · ACTIVE</span></div>
+          </a>
+          <a class="feed-card" href="#baekhan">
+            <img src="assets/characters/baekhan-id-card.png" alt="백한 카드" />
+            <div><strong>백한</strong><span>2급 창사 · 경계관리청 · ACTIVE</span></div>
+          </a>
+          <a class="feed-card" href="#jiwoo">
+            <img src="assets/characters/jiwoo-id-card.png" alt="이지우 카드" />
+            <div><strong>이지우</strong><span>2급 창사 · 경계관리청 · ACTIVE</span></div>
+          </a>
+          <a class="feed-card" href="#hanyura">
+            <img src="assets/characters/hanyura-id-card.png" alt="한유라 카드" />
+            <div><strong>한유라</strong><span>1단 창사 · 경계관리청 교관 · ACTIVE</span></div>
+          </a>
+          <a class="feed-card" href="#yoon">
+            <img src="assets/characters/yoon-id-card.png" alt="윤 카드" />
+            <div><strong>윤</strong><span>직무사자 · 저승 · UNIDENTIFIED</span></div>
+          </a>
+        </div>
+      </section>
+
+      <section class="section wrap-wide profile-section" id="profile-container">
+        <!-- JS로 렌더링 됩니다 -->
+      </section>
+    </main>
+
+    <footer>경계의 문 · 등장인물 아카이브 · Haeundae Blue</footer>
+  </div>
+
+  <script>
+    fetch('assets/characters.json')
+      .then(res => res.json())
+      .then(characters => {
+        const grid = document.querySelector('.character-grid');
+        const container = document.getElementById('profile-container');
+        
+        grid.innerHTML = characters.map(char => `
+          <a class="feed-card" href="#${char.id}">
+            <img src="${char.image}" alt="${char.name} 카드" />
+            <div><strong>${char.name}</strong><span>${char.tags[0]} · ${char.tags[1]} · ${char.tags[2] || ''}</span></div>
+          </a>
+        `).join('');
+
+        container.innerHTML = characters.map(char => `
+          <article id="${char.id}" class="glass-panel profile-layout ${char.id === 'yoon' ? 'profile-layout--underworld' : ''}">
+            <div class="visual-pane" style="background-image:url('${char.leftImage || char.image}');"></div>
+            <div class="profile-copy">
+              <p class="eyebrow">${char.eyebrow}</p>
+              <h3 style="margin-bottom: 12px;">${char.name}</h3>
+              <div class="tag-row" style="margin-bottom: 72px;">${char.tags.map(t => `<span>${t}</span>`).join('')}</div>
+              <div class="description-content" style="white-space: pre-wrap; line-height: 1.8;">${char.description}</div>
+              <div class="id-glass" style="margin-top: 40px; width: 100%;"><img src="${char.image}" alt="${char.name} 신분증 카드" /></div>
+              <div class="mini-panels">
+                <div class="mini-panel"><b>Role</b><span>${char.role}</span></div>
+                <div class="mini-panel"><b>Signal</b><span>${char.signal}</span></div>
+                <div class="mini-panel"><b>Note</b><span>${char.note}</span></div>
+              </div>
+            </div>
+          </article>
+        `).join('');
+      })
+      .catch(err => console.error('Failed to load characters.json:', err));
+  </script>
+</body>
+</html>

@@ -1,0 +1,1050 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>경계의 문</title>
+  <style>
+    :root {
+      --bg: #02070a;
+      --bg2: #061017;
+      --panel: #f4efe6;
+      --paper: #fffaf0;
+      --ink: #172025;
+      --muted: #6a7479;
+      --red: #9f2334;
+      --blue: #1b6875;
+      --gold: #c29a42;
+      --line: rgba(244, 239, 230, 0.14);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.62);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(27, 104, 117, 0.18), transparent 26rem),
+        radial-gradient(circle at 82% 8%, rgba(159, 35, 52, 0.22), transparent 24rem),
+        linear-gradient(180deg, var(--bg), #010304 72%);
+      color: var(--panel);
+      font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif;
+      line-height: 1.72;
+      word-break: keep-all;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image: 
+        radial-gradient(circle at 50% 100%, rgba(27, 104, 117, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 80% 120%, rgba(61, 171, 210, 0.1) 0%, transparent 50%),
+        url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="rgba(27,104,117,0.08)"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="rgba(61,171,210,0.06)"/></svg>');
+      background-repeat: no-repeat, no-repeat, repeat-x;
+      background-size: 100% 100%, 100% 100%, 1200px 120px;
+      background-position: 0 0, 0 0, bottom;
+      animation: waveDrift 25s linear infinite;
+    }
+
+    @keyframes waveDrift {
+      0% { background-position: 0 0, 0 0, 0 bottom; }
+      100% { background-position: 0 0, 0 0, -1200px bottom; }
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .page-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: rgba(2, 7, 10, 0.78);
+      border-bottom: 1px solid rgba(244, 239, 230, 0.12);
+      backdrop-filter: blur(16px);
+    }
+
+    .page-nav a {
+      padding: 8px 12px;
+      border: 1px solid rgba(244, 239, 230, 0.16);
+      border-radius: 999px;
+      color: #eafcff;
+      font-size: 13px;
+      font-weight: 900;
+      text-decoration: none;
+      text-shadow: 0 0 10px rgba(126, 226, 255, 0.22);
+    }
+
+    .top-line {
+      height: 5px;
+      background: linear-gradient(90deg, var(--red), var(--gold), var(--blue));
+    }
+
+    .hero {
+      padding: 64px 0 34px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Nanum Myeongjo", "Batang", serif;
+      font-size: clamp(48px, 9vw, 96px);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+      color: #f5e6c8;
+      text-shadow: 0 0 28px rgba(194, 154, 66, 0.24);
+    }
+
+    .subtitle {
+      margin: 18px 0 0;
+      color: #cbd9d8;
+      font-size: clamp(17px, 2.5vw, 22px);
+      font-weight: 700;
+    }
+
+    .signal-panel {
+      margin-top: 34px;
+      position: relative;
+      overflow: hidden;
+      padding: 20px 20px 30px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(159, 35, 52, 0.24), transparent 30rem),
+        linear-gradient(180deg, rgba(5, 12, 17, 0.98), rgba(1, 4, 7, 0.99));
+      border: 1px solid rgba(194, 154, 66, 0.18);
+      border-top: 3px solid var(--red);
+      box-shadow:
+        0 0 0 1px rgba(159, 35, 52, 0.22),
+        0 0 34px rgba(159, 35, 52, 0.22),
+        var(--shadow);
+    }
+
+    .hero-visual {
+      position: relative;
+      overflow: hidden;
+      margin: 0 0 78px;
+      background: #020406;
+      border: 1px solid rgba(194, 154, 66, 0.18);
+      box-shadow:
+        0 0 0 1px rgba(159, 35, 52, 0.16),
+        0 26px 70px rgba(0, 0, 0, 0.7);
+    }
+
+    .hero-visual img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .scene-copy {
+      position: relative;
+      width: min(72%, 760px);
+      margin: 0 auto 72px;
+      color: rgba(255, 243, 223, 0.82);
+      font-family: "Nanum Myeongjo", "Batang", serif;
+      font-size: clamp(14px, 1.9vw, 17px);
+      font-weight: 600;
+      line-height: 1.75;
+      text-align: left;
+      filter: drop-shadow(0 0 7px rgba(159, 35, 52, 0.28));
+    }
+
+    .scene-copy.opening-copy {
+      text-align: center;
+    }
+
+    .red-glow {
+      color: #b3132a;
+      font-weight: 800;
+      text-shadow: 0 0 5px rgba(179, 19, 42, 0.68), 0 0 15px rgba(80, 0, 16, 0.72), 0 0 28px rgba(20, 0, 8, 0.8);
+    }
+
+    @keyframes warningPulse {
+      0%, 100% {
+        opacity: 0.78;
+        filter: drop-shadow(0 0 4px rgba(194, 154, 66, 0.28));
+      }
+      50% {
+        opacity: 1;
+        filter: drop-shadow(0 0 12px rgba(194, 154, 66, 0.52));
+      }
+    }
+
+    @keyframes tapeDrift {
+      from {
+        background-position: 0 0;
+      }
+      to {
+        background-position: 42px 0;
+      }
+    }
+
+    .hazard-zone {
+      position: relative;
+      width: min(92%, 920px);
+      height: 58px;
+      margin: 24px auto 28px;
+    }
+
+    .hazard-tape {
+      position: relative;
+      width: min(100%, 920px);
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid rgba(194, 154, 66, 0.24);
+      background:
+        repeating-linear-gradient(135deg, #c9a227 0 12px, #070707 12px 24px);
+      box-shadow: 0 0 18px rgba(159, 35, 52, 0.18);
+      animation: warningPulse 2.8s ease-in-out infinite;
+    }
+
+    .hazard-tape.secondary {
+      position: absolute;
+      left: 6%;
+      right: 4%;
+      top: 24px;
+      width: auto;
+      transform: rotate(-1.6deg);
+      opacity: 0.82;
+    }
+
+    .hazard-tape span {
+      display: block;
+      padding: 5px 12px;
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.52)),
+        repeating-linear-gradient(135deg, transparent 0 12px, rgba(0, 0, 0, 0.18) 12px 24px);
+      background-size: auto, 42px 42px;
+      color: #0b0604;
+      font-family: "D2Coding", "Consolas", monospace;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-align: center;
+      text-shadow: 0 1px 0 rgba(255, 230, 126, 0.45);
+      animation: tapeDrift 5.5s linear infinite;
+    }
+
+    .breach-sequence {
+      position: relative;
+      margin: 96px auto 58px;
+    }
+
+    .breach-alert,
+    .breach-copy {
+      color: rgba(255, 243, 223, 0.78);
+      font-family: "Nanum Myeongjo", "Batang", serif;
+      font-size: clamp(14px, 1.9vw, 17px);
+      font-weight: 600;
+      line-height: 1.75;
+      text-align: left;
+      filter: drop-shadow(0 0 7px rgba(159, 35, 52, 0.28));
+    }
+
+    .breach-alert {
+      width: min(62%, 660px);
+      margin: 0 0 58px 7%;
+      color: #8f1020;
+      font-weight: 800;
+      text-shadow: 0 0 7px rgba(120, 0, 20, 0.56), 0 0 14px rgba(55, 0, 12, 0.46);
+    }
+
+    .breach-copy {
+      width: min(58%, 620px);
+      margin: 0 8% 0 auto;
+    }
+
+    .threat-grid {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 44px;
+      margin-top: 0;
+    }
+
+    .signal-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 5px),
+        linear-gradient(90deg, rgba(159, 35, 52, 0.2), transparent 20%, transparent 80%, rgba(27, 104, 117, 0.16));
+      opacity: 0.45;
+    }
+
+    .signal-stack {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .intro-card,
+    .notice-card,
+    .light-card {
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .intro-card {
+      background:
+        linear-gradient(180deg, rgba(8, 22, 28, 0.94), rgba(3, 10, 13, 0.98)),
+        radial-gradient(circle at 0% 0%, rgba(27, 104, 117, 0.16), transparent 24rem);
+      color: #d9e2df;
+      padding: 30px 32px;
+      border: 1px solid rgba(61, 171, 210, 0.18);
+      border-left: 5px solid var(--blue);
+      box-shadow: var(--shadow), inset 0 0 36px rgba(27, 104, 117, 0.08);
+    }
+
+    .intro-card p {
+      margin: 0 0 18px;
+      font-size: 16px;
+      line-height: 1.9;
+    }
+
+    .intro-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .hook {
+      color: #eafcff;
+      font-weight: 900;
+      text-shadow: 0 0 10px rgba(126, 226, 255, 0.2);
+    }
+
+    .blue-glow {
+      color: #eafcff;
+      font-weight: 900;
+      text-shadow: 0 0 10px rgba(126, 226, 255, 0.22);
+    }
+
+    .gold-glow {
+      color: #f0d28a;
+      font-weight: 900;
+      text-shadow: 0 0 10px rgba(194, 154, 66, 0.22);
+    }
+
+    .notice-card {
+      background: linear-gradient(180deg, rgba(8, 22, 28, 0.92), rgba(4, 12, 15, 0.96));
+      padding: 18px;
+      border-top: 3px solid var(--red);
+    }
+
+    .signal-frame {
+      position: relative;
+      background: rgba(1, 4, 7, 0.86);
+      border: 1px solid rgba(194, 154, 66, 0.16);
+      padding: 10px;
+      box-shadow: 0 0 24px rgba(159, 35, 52, 0.15);
+    }
+
+    .signal-frame.main-alert {
+      width: min(80%, 840px);
+      margin: 0 auto;
+      padding: 12px;
+    }
+
+    .signal-frame.combat-alert {
+      margin-top: 0;
+      border-color: rgba(159, 35, 52, 0.24);
+    }
+
+    .signal-frame.threat-left {
+      width: min(78%, 820px);
+      margin-right: auto;
+      z-index: 2;
+    }
+
+    .popup-stack {
+      position: relative;
+      display: grid;
+      width: min(78%, 820px);
+      margin: 8px auto 0 0;
+      z-index: 2;
+    }
+
+    .popup-stack > .signal-frame {
+      grid-area: 1 / 1;
+    }
+
+    .popup-stack .signal-frame.threat-left {
+      width: 100%;
+      margin-right: 0;
+      position: relative;
+      z-index: 4;
+    }
+
+    .popup-stack .ghost-popup {
+      position: relative;
+      width: 100%;
+      pointer-events: none;
+      filter: brightness(0.66) saturate(0.82);
+    }
+
+    .ghost-popup.one {
+      transform: translate(26px, -14px);
+      opacity: 0.4;
+      z-index: 3;
+    }
+
+    .ghost-popup.two {
+      transform: translate(-28px, 16px);
+      opacity: 0.3;
+      z-index: 2;
+    }
+
+    .signal-frame.threat-right {
+      width: min(78%, 820px);
+      margin-left: auto;
+      margin-top: 0;
+      z-index: 2;
+    }
+
+    .signal-frame strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #f0d28a;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .signal-frame.combat-alert strong {
+      color: #e54c61;
+    }
+
+    .notice-card img,
+    .signal-frame img,
+    .preview img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #050505;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .signal-frame.main-alert img {
+      box-shadow: 0 0 28px rgba(159, 35, 52, 0.24);
+    }
+
+    .note {
+      margin-top: 72px;
+      color: #9fb2b2;
+      font-size: 13px;
+    }
+
+    .terminal-guide {
+      margin: 0;
+      padding: 18px 20px;
+      background:
+        linear-gradient(180deg, rgba(5, 14, 18, 0.94), rgba(2, 7, 10, 0.98)),
+        radial-gradient(circle at 0% 0%, rgba(194, 154, 66, 0.1), transparent 24rem);
+      border: 1px solid rgba(194, 154, 66, 0.2);
+      border-left: 5px solid var(--gold);
+      color: #d9e2df;
+      box-shadow: var(--shadow);
+    }
+
+    .terminal-guide h2 {
+      margin: 0 0 10px;
+      color: #f0d28a;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .terminal-guide p {
+      margin: 0 0 8px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .terminal-guide p:last-child {
+      margin-bottom: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 16px;
+      border: 1px solid rgba(244, 239, 230, 0.22);
+      background: #0e2a33;
+      color: #fff4dc;
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+    }
+
+    .btn.primary {
+      background: linear-gradient(90deg, #7d1d2d, #b18332);
+    }
+
+    section {
+      padding: 6px 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-title::before {
+      content: "";
+      display: block;
+      width: 5px;
+      height: 28px;
+      background: linear-gradient(180deg, var(--red), var(--gold));
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #f5e6c8;
+      letter-spacing: -0.04em;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .preview {
+      background: rgba(5, 14, 18, 0.86);
+      border: 1px solid var(--line);
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .preview h3 {
+      margin: 0 0 10px;
+      color: #f0d28a;
+      font-size: 15px;
+    }
+
+    .preview p {
+      margin: 10px 0 0;
+      color: #a9bbbc;
+      font-size: 13px;
+    }
+
+    .preview-pair {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .light-card {
+      background:
+        linear-gradient(180deg, rgba(8, 22, 28, 0.92), rgba(4, 12, 15, 0.97)),
+        radial-gradient(circle at 0% 0%, rgba(194, 154, 66, 0.08), transparent 24rem);
+      color: #d9e2df;
+      padding: 18px;
+      border: 1px solid rgba(194, 154, 66, 0.16);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      font-size: 15px;
+    }
+
+    th,
+    td {
+      padding: 13px 12px;
+      border-bottom: 1px solid rgba(244, 239, 230, 0.1);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: #f0d28a;
+      background: rgba(194, 154, 66, 0.1);
+      font-weight: 900;
+    }
+
+    code {
+      color: #9fe8ef;
+      font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif;
+      font-size: 1em;
+      font-weight: 900;
+      text-shadow: 0 0 10px rgba(126, 226, 255, 0.22);
+    }
+
+    details {
+      background:
+        linear-gradient(180deg, rgba(8, 22, 28, 0.92), rgba(4, 12, 15, 0.97));
+      color: #d9e2df;
+      border: 1px solid rgba(194, 154, 66, 0.16);
+      margin: 12px 0;
+      box-shadow: var(--shadow);
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 16px 18px;
+      color: #eafcff;
+      font-weight: 900;
+      background:
+        linear-gradient(90deg, rgba(61, 171, 210, 0.34), rgba(233, 252, 255, 0.12), rgba(27, 104, 117, 0.06));
+      border-left: 5px solid var(--blue);
+      text-shadow: 0 0 10px rgba(126, 226, 255, 0.22);
+    }
+
+    .detail-body {
+      padding: 24px 30px 26px;
+      border-top: 1px solid rgba(244, 239, 230, 0.1);
+      background: linear-gradient(180deg, rgba(3, 10, 13, 0.56), rgba(2, 7, 10, 0.78));
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .detail-body p {
+      margin: 0 0 18px;
+    }
+
+    .character-card-strip {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .character-card-strip figure {
+      margin: 0;
+      padding: 8px;
+      background: linear-gradient(135deg, rgba(126, 226, 255, 0.22), rgba(255, 255, 255, 0.05), rgba(159, 35, 52, 0.12));
+      border: 1px solid rgba(126, 226, 255, 0.22);
+      box-shadow: 0 0 24px rgba(27, 104, 117, 0.28), 0 20px 54px rgba(0, 0, 0, 0.58);
+    }
+
+    .character-card-strip img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #050505;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .start-box {
+      border-left: 5px solid var(--red);
+    }
+
+    .rp-bgm-lead {
+      margin: 0 0 14px;
+      color: rgba(244, 239, 230, 0.72);
+      font-size: 14px;
+    }
+
+    .rp-bgm-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .rp-bgm-list a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid rgba(244, 239, 230, 0.14);
+      background: rgba(5, 14, 18, 0.86);
+      color: #e8f4ff;
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .rp-bgm-list a:hover {
+      border-color: rgba(126, 226, 255, 0.35);
+      background: rgba(14, 42, 51, 0.92);
+    }
+
+    .rp-bgm-list a::after {
+      content: "YouTube ↗";
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(126, 226, 255, 0.78);
+      letter-spacing: 0.04em;
+    }
+
+    .rp-bgm-note {
+      margin: 14px 0 0;
+      color: #8aa0a2;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    footer {
+      padding: 40px 0 60px;
+      color: #8aa0a2;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 840px) {
+      .preview-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .preview-pair {
+        grid-template-columns: 1fr;
+      }
+
+      .character-card-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .signal-frame.combat-alert {
+        width: 100%;
+      }
+
+      .signal-frame.main-alert {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .scene-copy {
+        width: 100%;
+      }
+
+      .threat-grid {
+        gap: 18px;
+      }
+
+      .breach-alert,
+      .breach-copy {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .signal-frame.threat-left,
+      .signal-frame.threat-right {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 0;
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-line"></div>
+  <nav class="page-nav" aria-label="상세 페이지 메뉴">
+    <a href="index.html">대문</a>
+    <a href="characters.html">등장인물</a>
+    <a href="world.html">세계관</a>
+    <a href="dex.html">괴이체 도감</a>
+    <a href="gallery.html">에셋 갤러리</a>
+  </nav>
+
+  <header class="hero wrap">
+    <div class="eyebrow">Boundary Gate · Busan Branch</div>
+    <h1>경계의 문</h1>
+    <div class="hazard-zone" aria-hidden="true">
+      <div class="hazard-tape"><span>BOUNDARY BREACH WARNING · ACCESS RESTRICTED</span></div>
+      <div class="hazard-tape secondary"><span>DO NOT CROSS · SPIRIT CONTAINMENT LINE</span></div>
+    </div>
+    <p class="subtitle">한국 무속 기반 현대 판타지 시뮬레이션</p>
+
+    <section class="signal-panel" aria-label="관리청 긴급 상황 미리보기">
+      <figure class="hero-visual">
+        <img src="assets/hero-cheongyeon.png" alt="부산 경계관리청장 청연 히어로 이미지" />
+      </figure>
+      <div class="signal-stack">
+        <p class="scene-copy opening-copy">그 해 여름은 망종부터 유례없는 <span class="red-glow">폭염</span>이 이어졌다.<br><br>모두가 턱을 타고 흐르는 땀을 닦아내기 급급할 무렵,<br>태양열 아래 뜨겁게 달궈진 바다 위로 흐린 물안개를 가르며 —<br><span class="red-glow">거대한 산문</span> 하나가 모습을 드러냈다.</p>
+        <div class="signal-frame main-alert">
+          <strong>Emergency Directive</strong>
+          <img
+            src="https://bi.pharang.workers.dev/?theme=alert&sender=%EA%B2%BD%EA%B3%84%EA%B4%80%EB%A6%AC%EC%B2%AD%EC%9E%A5+%EC%B2%AD%EC%97%B0&text=%EB%A7%88%EB%A6%B0%EC%8B%9C%ED%8B%B0+%EA%B2%BD%EA%B3%84+%EB%B6%95%EA%B4%B4+%EC%A7%95%ED%9B%84.+%EC%A0%84+%EC%B0%BD%EC%82%AC%2C+%EC%A6%89%EC%8B%9C+%EB%B4%89%EC%87%84%EC%84%A0%EC%9C%BC%EB%A1%9C+%EC%A7%91%EA%B2%B0.&level=urgent&label=%EC%9E%AC%ED%95%B4+%EC%98%88%EB%B9%84+%EA%B2%BD%EB%B3%B4&v=20260516c"
+            alt="경계관리청장 청연 긴급 경고 UI"
+          />
+        </div>
+        <div class="breach-sequence">
+          <p class="breach-copy">장산 능선의 폐쇄 등산로, 산허리를 타고 떨어지는 폭포 너머로부터 시작된 <span class="red-glow">비명소리</span>가 전 채널을 타고 무전에서 흘러나왔다.</p>
+        </div>
+        <div class="threat-grid">
+          <div class="popup-stack">
+            <div class="signal-frame combat-alert threat-left ghost-popup two">
+              <strong>Boundary Tactics</strong>
+              <img
+                src="https://bi.pharang.workers.dev/?theme=combat&mode=engage&id=BMA-0199&v=20260516c"
+                alt=""
+              />
+            </div>
+            <div class="signal-frame combat-alert threat-left ghost-popup one">
+              <strong>Boundary Tactics</strong>
+              <img
+                src="https://bi.pharang.workers.dev/?theme=combat&mode=engage&id=BMA-0199&v=20260516c"
+                alt=""
+              />
+            </div>
+            <div class="signal-frame combat-alert threat-left">
+              <strong>Boundary Tactics</strong>
+              <img
+                src="https://bi.pharang.workers.dev/?theme=combat&mode=engage&id=BMA-0199&v=20260516c"
+                alt="창귀 전투 대치 UI"
+              />
+            </div>
+          </div>
+          <div class="signal-frame combat-alert threat-right">
+            <strong>Boundary Tactics</strong>
+            <img
+              src="https://bi.pharang.workers.dev/?theme=combat&mode=engage&turn=01&target=%EC%9E%A5%EC%82%B0%EB%B2%94&id=BMA-0200&risk=1%EA%B8%89&intro=%EC%82%B0%EB%B9%84%ED%83%88+%EC%95%88%EA%B0%9C+%EC%86%8D%EC%97%90%EC%84%9C+%EB%82%AF%EC%9D%B5%EC%9D%80+%EB%AA%A9%EC%86%8C%EB%A6%AC%EA%B0%80%2C%0A%EC%95%84%EC%9D%B4+%EC%9A%B8%EC%9D%8C%EC%B2%98%EB%9F%BC+%EB%B2%88%EC%A7%84%EB%8B%A4.&decision=%EC%A0%91%EA%B7%BC+%EA%B8%88%EC%A7%80+%C2%B7+%EB%AF%BC%EA%B0%84%EC%9D%B8+%EB%8C%80%ED%94%BC+%C2%B7+%EB%B4%89%EC%87%84+%EC%9C%A0%EC%A7%80&em=%EB%AA%A9%EC%86%8C%EB%A6%AC%7C%EC%95%84%EC%9D%B4+%EC%9A%B8%EC%9D%8C&v=20260516c"
+              alt="장산범 전투 대치 UI"
+            />
+          </div>
+        </div>
+      </div>
+      <p class="note">상황에 따라 표시되는 정적 UI 이미지입니다. 버튼은 장식이며, 진행은 지문으로 이어집니다.</p>
+    </section>
+  </header>
+
+  <main class="wrap">
+    <section id="intro">
+      <article class="intro-card">
+        <p>불길하게 점멸하는 <span class="blue-glow">형광등</span> 아래, 새벽마다 같은 층에 멈추는 <span class="blue-glow">엘리베이터</span>. 아무도 없는 텅 빈 복도 너머 들리는 기괴한 웃음소리. <span class="red-glow">정체 불명의 변사체 급증</span> 등.</p>
+        <p>그저 인터넷 상에서 재미있는 괴담으로 치부되었을 일들이 현대에 들어 하나씩 늘어나다 못해 <span class="blue-glow">행정이 마비될 수준</span>으로 급증하기 시작했으나 <span class="red-glow">CCTV에는 아무것도 찍히지 않았다.</span> 다만 녹음 파일을 돌려 들으면, 정체 불명의 노이즈와 식별 불가능한 사람의 소름 끼치는 웃음소리와 비명 소리가 섞여 있었다.</p>
+        <p>그리하여 <span class="gold-glow">2036년 부산</span>은 현재 실종 신고와 봉쇄 명령으로 몸살을 앓고 있었다.</p>
+        <p>해운대 앞바다와 마린시티 일대, 현실의 경계가 조금씩 어긋나는 곳. 열린 <span class="red-glow">경계의 문</span> 틈으로 흘러나온 혼령과 원한은 사람과 물건, 장소에 깃들고, 평범한 일상은 순식간에 무너져내려 참혹한 사건 현장으로 변모한다.</p>
+        <p>당신은 대한민국 경계관리청 부산지부 상반기 공채에 합격한 <span class="blue-glow">신입 창사</span>다.</p>
+        <p>신내림을 받았든, 부적을 다루든, 귀신이 남긴 흔적을 품고 살아남았든. 창사에게 주어진 일은 같다.<br>당신은 현세에 들러붙은 원한의 흔적을 쫓고, 그것이 더 깊이 뿌리내리기 전에 <span class="gold-glow">봉인하거나 제령</span>해야 한다.</p>
+        <p class="hook">공식 기록에 따르면 관측 사례 중 가장 불길한 기척을 뿜어내는 <span class="red-glow">‘명계의 문’</span>은 아직 열리지 않았다.</p>
+        <p class="hook"><span class="red-glow">—아직은.</span></p>
+        <p class="hook">더 거대한 경계의 문틈 너머에서, 누군가 당신을 부르고 있다.</p>
+
+        <div class="actions">
+          <a class="btn primary" href="#start">시작 입력 보기</a>
+          <a class="btn" href="#world">세계관 보기</a>
+          <a class="btn" href="#ui">UI 미리보기</a>
+        </div>
+      </article>
+    </section>
+
+    <section aria-label="경계관리청 단말기 지침">
+      <article class="terminal-guide">
+        <h2>⚠️ 경계관리청 단말기 지침</h2>
+        <p>본 시스템은 창사의 안전한 현장 조사를 위해 괴이의 시각적 이미지나 일러스트를 직접 출력하지 않으며, 오직 관리청 단말의 정보 데이터만 제공합니다.</p>
+        <p>전투 장면은 귀신 이미지, 점프스케어, 혐오 요소 없이 진행되므로 안심하고 시작하실 수 있습니다.</p>
+      </article>
+    </section>
+
+    <section id="ui">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+        <div class="section-title" style="margin-bottom: 0;">
+          <h2 style="margin: 0;">시스템 UI 미리보기</h2>
+        </div>
+        <a class="btn primary" href="characters.html">상세 페이지 (캐릭터 설정 및 에셋)</a>
+      </div>
+      <div class="preview-grid">
+        <article class="preview">
+          <h3>강령체 도감</h3>
+          <img src="https://bi.pharang.workers.dev/?theme=dex&id=BMA-0199" alt="창귀 도감 UI" />
+          <p>괴이체 정보를 확인합니다.</p>
+        </article>
+        <article class="preview">
+          <h3>전투 조우</h3>
+          <div class="preview-pair">
+            <img
+              src="https://bi.pharang.workers.dev/?theme=combat&mode=engage&id=BMA-0199&v=20260516c"
+              alt="첫 조우 전투 UI"
+            />
+            <img
+              src="https://bi.pharang.workers.dev/?theme=combat&mode=resolve&turn=02&target=%EC%B0%BD%EA%B7%80&goal=%EB%B4%89%EC%87%84&progress=42&actor=%EC%B0%BD%EC%82%AC&spirit=68&action=%EB%B6%80%EC%A0%81&label=%EC%A3%BC%EB%AC%B8&verdict=%EB%AA%A9%EC%86%8C%EB%A6%AC%EA%B0%80+%EC%82%B0%EA%B8%B8+%EC%95%88%EC%AA%BD%EC%9C%BC%EB%A1%9C+%EB%B0%80%EB%A0%A4%EB%82%9C%EB%8B%A4.&v=20260516c"
+              alt="전투 중 판정 UI"
+            />
+          </div>
+          <p>전투 중 판정을 출력합니다.</p>
+        </article>
+        <article class="preview">
+          <h3>인형뽑기</h3>
+          <img src="https://bi.pharang.workers.dev/?theme=arcade&mode=idle" alt="인형뽑기 대기 UI" />
+          <p>관리청 옆 골목에서 즐길 수 있는 보상 콘텐츠입니다.</p>
+        </article>
+        <article class="preview">
+          <h3>시스템 공지/경고</h3>
+          <img src="https://bi.pharang.workers.dev/?theme=alert&sender=%EA%B2%BD%EA%B3%84%EA%B4%80%EB%A6%AC%EC%B2%AD&text=%ED%98%84%EC%9E%AC+%EB%A7%88%EB%A6%B0%EC%8B%9C%ED%8B%B0+%EC%9D%BC%EB%8C%80+%EA%B8%B0%EC%83%81+%EC%95%85%ED%99%94%EB%A1%9C+%EC%9D%B8%ED%95%B4+%EC%8B%9C%EC%95%BC+%ED%99%95%EB%B3%B4%EA%B0%80+%EC%96%B4%EB%A0%B5%EC%8A%B5%EB%8B%88%EB%8B%A4.+%ED%98%84%EC%9E%A5+%EC%B0%BD%EC%82%AC%EB%93%A4%EC%9D%80+%EC%95%88%EC%A0%84%EC%97%90+%EC%9C%A0%EC%9D%98%ED%95%98%EC%8B%9C%EA%B8%B0+%EB%B0%94%EB%9E%8D%EB%8B%88%EB%8B%A4.&level=normal&label=%EC%95%88%EB%82%B4" alt="일반 안내 UI" />
+          <img src="https://bi.pharang.workers.dev/?theme=alert&sender=%EA%B2%BD%EA%B3%84%EA%B4%80%EB%A6%AC%EC%B2%AD%EC%9E%A5+%EC%B2%AD%EC%97%B0&text=%EB%A7%88%EB%A6%B0%EC%8B%9C%ED%8B%B0+%EA%B2%BD%EA%B3%84+%EB%B6%95%EA%B4%B4+%EC%A7%95%ED%9B%84.+%EC%A0%84+%EC%B0%BD%EC%82%AC%2C+%EC%A6%89%EC%8B%9C+%EB%B4%89%EC%87%84%EC%84%A0%EC%9C%BC%EB%A1%9C+%EC%A7%91%EA%B2%B0.&level=urgent&label=%EC%9E%AC%ED%95%B4+%EC%98%88%EB%B9%84+%EA%B2%BD%EB%B3%B4" alt="긴급 경고 UI" style="margin-top:8px;" />
+          <p>상황에 따라 AI가 연출하는 공지 및 경고창입니다.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <details>
+        <summary>등장인물</summary>
+        <div class="detail-body">
+          <div class="character-card-strip">
+            <figure><img src="assets/characters/cheongyeon-id-card.png" alt="청연 신분증 카드" /></figure>
+            <figure><img src="assets/characters/chaeseoha-id-card.png" alt="채서하 신분증 카드" /></figure>
+            <figure><img src="assets/characters/catherine-id-card.png" alt="캐서린 신분증 카드" /></figure>
+            <figure><img src="assets/characters/shinahyeon-id-card.png" alt="신아현 신분증 카드" /></figure>
+            <figure><img src="assets/characters/baekyuha-id-card.png" alt="백유하 신분증 카드" /></figure>
+            <figure><img src="assets/characters/baekhan-id-card.png" alt="백한 신분증 카드" /></figure>
+            <figure><img src="assets/characters/jiwoo-id-card.png" alt="이지우 신분증 카드" /></figure>
+            <figure><img src="assets/characters/hanyura-id-card.png" alt="한유라 신분증 카드" /></figure>
+            <figure><img src="assets/characters/yoon-id-card.png" alt="윤 신분증 카드" /></figure>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section id="start">
+      <details>
+        <summary>시작 안내</summary>
+        <div class="detail-body">
+          <p><strong>제령 능력 및 별호</strong><br>신내림의 경우 신명과 효과, 혹은 부적이나 무구 등 사용하는 힘과 별호를 입력합니다.</p>
+          <p><strong>창사 계급</strong><br><code>3급</code>, <code>2급</code>, <code>1급</code>, <code>1단</code>, <code>2단</code> 중 하나를 입력합니다. 보통 신입은 <code>3급</code>으로 시작합니다.</p>
+        </div>
+      </details>
+    </section>
+
+    <section>
+      <details>
+        <summary>호출 기능 안내</summary>
+        <div class="detail-body">
+          <p><strong>파랑 SNS</strong> · <code>!파랑</code>, <code>!타임라인</code><br>상태창에 <code>🌊</code> 표시. 게시글·멘션 SNS 표 제공.</p>
+          <p><strong>도감</strong> · <code>도감</code>, <code>조회</code><br>괴이체 정보를 UI 이미지로 표시. <code>정적 이미지 · 클릭 불가</code></p>
+          <p><strong>인형뽑기</strong> · <code>뽑기</code>, <code>인형뽑기</code><br>관리청 옆 인형뽑기방에서 재화 투입 지문 입력.</p>
+        </div>
+      </details>
+    </section>
+
+    <section id="world">
+      <div class="section-title">
+        <h2>상세 설정</h2>
+      </div>
+
+      <details>
+        <summary>배경 세계관</summary>
+        <div class="detail-body">
+          <p>인간, 동물, 혹은 그 둘 중 어디에도 속하지 않는 그 모든 존재가 가지는 부정적인 에너지, 한. 인류가 번성하고 역사가 길어질수록 원한을 맺은 존재들 역시 나날이 늘어만 갔다.</p>
+          <p>2020년 무렵 세계 곳곳, 특히 판의 지각판 경계 근처에서 이상현상이 과학적으로 관측되기 시작했다. 그동안 괴담으로 치부됐던 귀신을 봤다는 주장을 하는 사람들이 점차 생겨났고, 부정한 존재들은 현실을 무너트리기 시작했다. 이에 대응하기 위한 세계 연합 기관 ‘경계의 창’이 출범했고, 대한민국 정부는 그 산하 협력 기관으로 경계관리청을 세웠다.</p>
+          <p>판의 경계 근처 지역에서 발생하는 이상 현상. 누구는 폴터가이스트라 말하고, 누구는 차원이 무너지는 징조라고 말한다. 한 번 벌어진 경계를 제때 복구시키지 못하면 점점 그 지역은 오염되고, 경계의 ‘문’이 나타난다.</p>
+          <p>현재 그 문은 명계에 닿아있는 것으로 추정 중이며, 문이 한 번 열릴 시 수십에서 많게는 수천의 원혼과 강령체들이 쏟아져나온다. 강령체는 현실에 깃들어 신기가 없는 사람도 볼 수 있다.</p>
+          <p>마치 창문을 들여다보듯 경계 너머의 세상을 보는 사람들, 즉 영력, 혹은 신기라 불리는 그 어떤 무속적인 힘을 지니고 제령 활동을 하는 사람들을 창사라 부르게 되었다.</p>
+          <p>대대로 무속집안이거나, 신내림을 받은 자, 혹은 귀신에게 빙의된 자들은 그 신과 관련된 힘을 부려 부정한 존재들을 퇴치하여 해당 창사들에게는 부리는 신명으로 별호가 붙게 되었다.</p>
+          <p>대한민국 정부는 가장 피해가 막심한 부산의 해운대에 부산 경계관리청을 세우고 세계와 협력하여 이 괴이 현상에 대응하고 있다.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>플레이 메모</summary>
+        <div class="detail-body">
+          <p>기본 시작은 부산 경계관리청 신입 창사 등록 장면입니다. 첫 응답에서 제령 능력 및 별호, 창사 계급을 입력하면 이후 상태창과 지문에 반영됩니다.</p>
+          <p>전투 카드와 관리청 경고창은 사건 진행 중 자동으로 출력될 수 있습니다. 도감과 인형뽑기는 호출 기능으로 사용할 수 있습니다.</p>
+          <p>🩵인간적 호감 💕설렘 💝연인</p>
+          <p><strong>SVG 출력 안내</strong><br>본 채팅의 상태창, 전투 카드, 경고창 일부는 SVG 이미지로 구현되어 있습니다. 간혹 루나톡 출력량이나 네트워크 상태에 따라 이미지가 늦게 뜨거나 누락될 수 있으므로, 상태창이 보이지 않을 경우에는 응답 재생성 또는 루나톡 출력량 부스트 사용을 권장드립니다.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>에셋 코드</summary>
+        <div class="detail-body">
+          <p><strong>이미지 출력</strong><br><code>![](https://bi.pharang.workers.dev/i/캐릭터코드/상황코드)</code></p>
+          <p><strong>캐릭터코드</strong><br>CY(청연), SH(채서하), CA(캐서린), AH(신아현), YH(백유하), BH(백한), JW(이지우), HR(한유라), YN(윤)</p>
+          <p><strong>상황코드</strong><br>감정: 0(프로필), 1(기본), 2(짜증), 3(슬픔), 4(놀람), 5(충격), 6(쑥스러움), 7(설렘), 8(홍조+부끄러움), 9(웃음), 11(호감), 12(경계), 13(분노), 14(전투), 15(위기), 16(침잠), 17(영력 전개, 특수 상황)</p>
+          <p>장소/이벤트: A01(놀이공원), A03(요트), A04(수영복), B01(해안산책), C02(카페), G01(식사), G02(아이스크림), G03(캔맥주), G04(야외,핫도그), E01(바다전투), E02(숲전투), F04(아쿠아리움)</p>
+          <p>이미지가 뜨지 않을 경우, 편집에 들어가 이미지 링크를 확인해주세요. 간혹 AI가 workers를 word로 적는 둥 주소를 잘못 입력할 때가 있습니다.</p>
+          <p>미리보기는 상세 페이지에서 확인하실 수 있습니다.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- BGM 섹션: 플레이리스트 완성 후 추후 오픈 예정 -->
+
+    <section>
+      <details>
+        <summary>업데이트 내역</summary>
+        <div class="detail-body">
+          <p>
+            <strong style="color:#d0a24a;">5월 19일</strong><br>
+            상태창 이모지 위치 변경, 가독성 수정&amp;캐릭터 성격 서술 보강.<br>
+            일본식 표현 금지 및 한국식 권장 표기 지침 프롬프트 추가.<br><br>
+            <strong style="color:#d0a24a;">[시스템 업데이트] 캐릭터 이미지 출력 방식 변경 및 안정화</strong><br><br>
+            캐릭터의 표정과 상황이 더 다양하고 자연스럽게 연출되도록 이미지 출력 시스템을 개편했습니다.<br><br>
+            <strong style="color:#d0a24a;">1. 이미지 출력 링크가 짧아졌습니다.</strong><br>
+            기존: ![](https://cheongyeon-dev.github.io/i/캐릭터코드/상황코드-숫자.webp)<br>
+            변경: ![](https://bi.pharang.workers.dev/i/캐릭터코드/상황코드)<br><br>
+            <strong style="color:#d0a24a;">2. 엑스박스 해결 안내</strong><br>
+            AI가 이전 대화 기록을 참고하다가 예전 방식(뒤에 숫자를 임의로 붙이는 방식)으로 이미지를 출력해 엑스박스가 뜰 수 있습니다.<br>
+            이 경우, 당황하지 마시고 상황코드 뒤에 붙은 숫자를 기본 값인 -1로 변경해주세요. (예: A01-2 ➔ A01-1)<br>
+            괄호 없이 출력된 링크는 괄호를 넣어주시면 됩니다.
+          </p>
+          <p>
+            <strong style="color:#d0a24a;">5월 20일</strong><br>
+            로어북, 프롬프트 최적화. 상태창 줄바꿈 오타 수정.
+          </p>
+          <p>
+            <strong style="color:#d0a24a;">5월 21일</strong><br>
+            기본 용어, 지침용 글로벌 로어북 추가. 연인 혹은 1대1 동행 중인 NPC의 옷차림은 이제 상태창에 👗로 표기됩니다.
+          </p>
+          <p>
+            <strong style="color:#d0a24a;">5월 22-23일</strong><br>
+            이미지 링크 출력 리디렉션 방식 안정화, 캐릭터 설정 및 에셋 미리보기가 가능한 페이지로 연결되는 버튼을 소개문에 추가하였습니다. 에셋 일부 교체가 이루어졌습니다.
+          </p>
+          <p>
+            <strong style="color:#d0a24a;">5월 24일</strong><br>
+            아쿠아리움, 수영복 에셋 추가. 커스텀 모드 시작 상황이 추가되었습니다. 그 외 인형뽑기의 NPC 인형 아이콘이 테스트 전 코드 방식으로 롤백되어 엑박이 뜨는 문제를 확인하여 수정하였습니다.
+          </p>
+          <p>
+            <strong style="color:#d0a24a;">5월 25일</strong><br>
+            세계관 페이지의 디자인과 가독성을 더욱 보기 좋게 전면 개편하였습니다.
+          </p>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    경계의 문 · 대한민국 경계관리청 부산지부 · 2036
+  </footer>
+</body>
+</html>

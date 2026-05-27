@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>세계관 에디터 | 경계의 문</title>
+  <style>
+    :root {
+      /* Base Background & Global Glass */
+      --bg-image: none;
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-blur: 16px;
+
+      /* Card/Panel Glass */
+      --panel-bg: rgba(255, 255, 255, 0.4);
+      --panel-border: rgba(255, 255, 255, 0.7);
+      --panel-shadow: rgba(255, 255, 255, 0.3);
+
+      /* Hero Title (대문) */
+      --hero-color-start: #ffffff;
+      --hero-color-end: #e0f0ff;
+      --hero-glow: rgba(255, 255, 255, 0.5);
+
+      /* Section & Term Titles (소제목/용어) */
+      --title-color-start: #0055ff;
+      --title-color-end: #00bfff;
+      --title-glow: rgba(0, 191, 255, 0.4);
+
+      /* Body Text (설명 본문) */
+      --text-color: #0c1f2e;
+      --text-glow-color: rgba(255, 255, 255, 1);
+      --text-glow-blur: 4px;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Pretendard", sans-serif;
+      color: var(--text-color);
+      background: var(--bg-image), linear-gradient(135deg, #d9f4ff 0%, #f6fcff 100%);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .glass-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+    }
+
+    .editor-container {
+      display: flex;
+      padding: 40px;
+      gap: 40px;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .editor-panel {
+      width: 450px;
+      flex-shrink: 0;
+      background: rgba(10, 25, 40, 0.85);
+      border: 1px solid rgba(0, 191, 255, 0.3);
+      border-radius: 12px;
+      padding: 24px;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .editor-group-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      margin: 24px 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .preview-panel {
+      flex-grow: 1;
+      overflow-y: auto;
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      padding: 40px;
+      border-radius: 12px;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #88eeff;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #88aacc;
+    }
+
+    input[type="file"],
+    input[type="color"],
+    input[type="range"] {
+      width: 100%;
+    }
+
+    input[type="color"] {
+      height: 40px;
+      padding: 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button {
+      padding: 10px 16px;
+      background: rgba(0, 191, 255, 0.2);
+      border: 1px solid rgba(0, 191, 255, 0.4);
+      color: #88eeff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 700;
+      width: 100%;
+    }
+
+    button:hover {
+      background: rgba(0, 191, 255, 0.3);
+    }
+
+    /* Card Preview Styles */
+    .preview-hero {
+      margin-bottom: 40px;
+    }
+    
+    .preview-hero h1 {
+      margin: 0;
+      font-size: 48px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--hero-color-start) 0%, var(--hero-color-end) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px var(--hero-glow);
+    }
+
+    .preview-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 32px 40px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      border: 1px solid var(--panel-border);
+      border-radius: 0;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px var(--panel-shadow);
+    }
+
+    .preview-card::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 10px;
+      height: 10px;
+      border-top: 1px solid var(--title-color-start);
+      border-left: 1px solid var(--title-color-start);
+      pointer-events: none;
+    }
+
+    .preview-card::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 10px;
+      height: 10px;
+      border-bottom: 1px solid var(--title-color-end);
+      border-right: 1px solid var(--title-color-end);
+      pointer-events: none;
+    }
+
+    .preview-card h3 {
+      margin: 0 0 16px 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, var(--title-color-start) 0%, var(--title-color-end) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 16px var(--title-glow);
+    }
+
+    .preview-card p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.8;
+      font-weight: 600;
+      color: var(--text-color);
+      text-shadow: 0 0 var(--text-glow-blur) var(--text-glow-color);
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-overlay"></div>
+  
+  <div class="editor-container">
+    <div class="editor-panel">
+      <h2>세계관 테마 에디터 (글래스 모피즘)</h2>
+      
+      <div class="editor-group-title">1. 백그라운드 & 글래스 (전체 화면)</div>
+      <div class="form-group">
+        <label>바다 배경 이미지 업로드 (필수)</label>
+        <input type="file" id="bg-upload" accept="image/*" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>글래스 전체 틴트 색상 (rgba)</label>
+          <input type="text" id="glass-bg" value="rgba(255, 255, 255, 0.15)" />
+        </div>
+        <div class="form-group">
+          <label>전체 화면 블러 강도</label>
+          <input type="number" id="glass-blur" value="16" />
+        </div>
+      </div>
+
+      <div class="editor-group-title">2. 카드/패널 (용어 정리 박스)</div>
+      <div class="form-group">
+        <label>카드 배경 색상 (rgba)</label>
+        <input type="text" id="panel-bg" value="rgba(255, 255, 255, 0.4)" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>카드 상단 반사광 테두리 (rgba)</label>
+          <input type="text" id="panel-border" value="rgba(255, 255, 255, 0.7)" />
+        </div>
+        <div class="form-group">
+          <label>카드 내부 이너 섀도우 (rgba)</label>
+          <input type="text" id="panel-shadow" value="rgba(255, 255, 255, 0.3)" />
+        </div>
+      </div>
+
+      <div class="editor-group-title">3. 폰트 (대문)</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>시작 색상</label>
+          <input type="color" id="hero-color-start" value="#ffffff" />
+        </div>
+        <div class="form-group">
+          <label>끝 색상</label>
+          <input type="color" id="hero-color-end" value="#e0f0ff" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>대문 글로우 색상 (rgba)</label>
+        <input type="text" id="hero-glow" value="rgba(255, 255, 255, 0.5)" />
+      </div>
+
+      <div class="editor-group-title">4. 폰트 (용어 타이틀)</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>시작 색상</label>
+          <input type="color" id="title-color-start" value="#0055ff" />
+        </div>
+        <div class="form-group">
+          <label>끝 색상</label>
+          <input type="color" id="title-color-end" value="#00bfff" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>타이틀 글로우(발광) 색상 (rgba)</label>
+        <input type="text" id="title-glow" value="rgba(0, 191, 255, 0.4)" />
+      </div>
+
+      <div class="editor-group-title">5. 폰트 (본문/설명)</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>본문 텍스트 색상</label>
+          <input type="color" id="text-color" value="#0c1f2e" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>본문 글로우 색상 (rgba/HEX)</label>
+          <input type="text" id="text-glow-color" value="rgba(255, 255, 255, 1)" />
+        </div>
+        <div class="form-group">
+          <label>본문 글로우 퍼짐 강도(px)</label>
+          <input type="number" id="text-glow-blur" value="4" step="1" />
+        </div>
+      </div>
+
+      <button id="save-btn" style="margin-top: 20px;">설정 저장 및 본섭 적용하기</button>
+    </div>
+
+    <div class="preview-panel">
+      <div class="preview-hero">
+        <h1>경계의 문</h1>
+      </div>
+      <div class="preview-card">
+        <h3>별호 (Title)</h3>
+        <p>창사에게 붙는 호칭. 선배 창사, 무당, 작명소에서 받는 관례가 있으나 직접 짓는 자도 존재한다. 신내림을 받은 자들은 대개 그 신과 같은 이름을 별호로 쓴다.</p>
+      </div>
+      <div class="preview-card">
+        <h3>영력 (Spirit Power)</h3>
+        <p>영혼의 힘을 현실에 실체화하는 에너지이자 출력 자원. 한국 무속의 신기. 소모될수록 부적·봉인·정화의 위력이 떨어진다.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    
+    // Elements
+    const bgUpload = document.getElementById('bg-upload');
+    const glassBg = document.getElementById('glass-bg');
+    const glassBlur = document.getElementById('glass-blur');
+    
+    const panelBg = document.getElementById('panel-bg');
+    const panelBorder = document.getElementById('panel-border');
+    const panelShadow = document.getElementById('panel-shadow');
+
+    const heroColorStart = document.getElementById('hero-color-start');
+    const heroColorEnd = document.getElementById('hero-color-end');
+    const heroGlow = document.getElementById('hero-glow');
+
+    const titleColorStart = document.getElementById('title-color-start');
+    const titleColorEnd = document.getElementById('title-color-end');
+    const titleGlow = document.getElementById('title-glow');
+
+    const textColor = document.getElementById('text-color');
+    const textGlowColor = document.getElementById('text-glow-color');
+    const textGlowBlur = document.getElementById('text-glow-blur');
+
+    const saveBtn = document.getElementById('save-btn');
+
+    // Load saved settings
+    const savedSettings = JSON.parse(localStorage.getItem('worldPageSettings')) || {};
+    
+    if (savedSettings.glassBg) { glassBg.value = savedSettings.glassBg; root.style.setProperty('--glass-bg', savedSettings.glassBg); }
+    if (savedSettings.glassBlur) { glassBlur.value = savedSettings.glassBlur; root.style.setProperty('--glass-blur', `${savedSettings.glassBlur}px`); }
+    
+    if (savedSettings.panelBg) { panelBg.value = savedSettings.panelBg; root.style.setProperty('--panel-bg', savedSettings.panelBg); }
+    if (savedSettings.panelBorder) { panelBorder.value = savedSettings.panelBorder; root.style.setProperty('--panel-border', savedSettings.panelBorder); }
+    if (savedSettings.panelShadow) { panelShadow.value = savedSettings.panelShadow; root.style.setProperty('--panel-shadow', savedSettings.panelShadow); }
+
+    if (savedSettings.heroColorStart) { heroColorStart.value = savedSettings.heroColorStart; root.style.setProperty('--hero-color-start', savedSettings.heroColorStart); }
+    if (savedSettings.heroColorEnd) { heroColorEnd.value = savedSettings.heroColorEnd; root.style.setProperty('--hero-color-end', savedSettings.heroColorEnd); }
+    if (savedSettings.heroGlow) { heroGlow.value = savedSettings.heroGlow; root.style.setProperty('--hero-glow', savedSettings.heroGlow); }
+
+    if (savedSettings.titleColorStart) { titleColorStart.value = savedSettings.titleColorStart; root.style.setProperty('--title-color-start', savedSettings.titleColorStart); }
+    if (savedSettings.titleColorEnd) { titleColorEnd.value = savedSettings.titleColorEnd; root.style.setProperty('--title-color-end', savedSettings.titleColorEnd); }
+    if (savedSettings.titleGlow) { titleGlow.value = savedSettings.titleGlow; root.style.setProperty('--title-glow', savedSettings.titleGlow); }
+
+    if (savedSettings.textColor) { textColor.value = savedSettings.textColor; root.style.setProperty('--text-color', savedSettings.textColor); }
+    if (savedSettings.textGlowColor) { textGlowColor.value = savedSettings.textGlowColor; root.style.setProperty('--text-glow-color', savedSettings.textGlowColor); }
+    if (savedSettings.textGlowBlur) { textGlowBlur.value = savedSettings.textGlowBlur; root.style.setProperty('--text-glow-blur', `${savedSettings.textGlowBlur}px`); }
+
+    // Live update functions
+    const updateStyle = (id, prop, suffix = '') => {
+      document.getElementById(id).addEventListener('input', (e) => root.style.setProperty(prop, `${e.target.value}${suffix}`));
+    };
+
+    updateStyle('glass-bg', '--glass-bg');
+    updateStyle('glass-blur', '--glass-blur', 'px');
+    updateStyle('panel-bg', '--panel-bg');
+    updateStyle('panel-border', '--panel-border');
+    updateStyle('panel-shadow', '--panel-shadow');
+    updateStyle('hero-color-start', '--hero-color-start');
+    updateStyle('hero-color-end', '--hero-color-end');
+    updateStyle('hero-glow', '--hero-glow');
+    updateStyle('title-color-start', '--title-color-start');
+    updateStyle('title-color-end', '--title-color-end');
+    updateStyle('title-glow', '--title-glow');
+    updateStyle('text-color', '--text-color');
+    updateStyle('text-glow-color', '--text-glow-color');
+    updateStyle('text-glow-blur', '--text-glow-blur', 'px');
+
+    // Local Image Upload
+    bgUpload.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          savedSettings.bgUrl = event.target.result;
+          root.style.setProperty('--bg-image', `url(${event.target.result})`);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Save Settings
+    saveBtn.addEventListener('click', () => {
+      savedSettings.glassBg = glassBg.value;
+      savedSettings.glassBlur = glassBlur.value;
+      savedSettings.panelBg = panelBg.value;
+      savedSettings.panelBorder = panelBorder.value;
+      savedSettings.panelShadow = panelShadow.value;
+      savedSettings.heroColorStart = heroColorStart.value;
+      savedSettings.heroColorEnd = heroColorEnd.value;
+      savedSettings.heroGlow = heroGlow.value;
+      savedSettings.titleColorStart = titleColorStart.value;
+      savedSettings.titleColorEnd = titleColorEnd.value;
+      savedSettings.titleGlow = titleGlow.value;
+      savedSettings.textColor = textColor.value;
+      savedSettings.textGlowColor = textGlowColor.value;
+      savedSettings.textGlowBlur = textGlowBlur.value;
+
+      localStorage.setItem('worldPageSettings', JSON.stringify(savedSettings));
+      alert('설정이 저장되었습니다! 세계관 페이지를 새로고침하면 적용됩니다.');
+    });
+  </script>
+</body>
+</html>

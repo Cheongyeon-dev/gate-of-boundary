@@ -1,0 +1,117 @@
+{
+  "baseUrl": "https://cheongyeon-dev.github.io/gate-of-boundary/assets/gallery",
+  "characters": [
+    {
+      "code": "CY",
+      "name": "청연"
+    },
+    {
+      "code": "SH",
+      "name": "채서하"
+    },
+    {
+      "code": "CA",
+      "name": "캐서린"
+    },
+    {
+      "code": "AH",
+      "name": "신아현"
+    },
+    {
+      "code": "YH",
+      "name": "백유하"
+    }
+  ],
+  "situations": [
+    {
+      "code": "1",
+      "name": "기본/대화"
+    },
+    {
+      "code": "2",
+      "name": "신분증/프로필"
+    },
+    {
+      "code": "3",
+      "name": "일상"
+    },
+    {
+      "code": "4",
+      "name": "미소/호감"
+    },
+    {
+      "code": "5",
+      "name": "경계/조사"
+    },
+    {
+      "code": "6",
+      "name": "분노/대립"
+    },
+    {
+      "code": "7",
+      "name": "전투"
+    },
+    {
+      "code": "8",
+      "name": "위기/부상"
+    },
+    {
+      "code": "9",
+      "name": "슬픔/침잠"
+    },
+    {
+      "code": "10",
+      "name": "신기/의식/특수"
+    },
+    {
+      "code": "11",
+      "name": "코믹/가벼운 장면"
+    },
+    {
+      "code": "12",
+      "name": "SNS/스냅샷"
+    }
+  ],
+  "assets": [
+    {
+      "group": "CY",
+      "code": "2",
+      "title": "청연 신분증 카드",
+      "status": "pending",
+      "preview": "assets/characters/cheongyeon-id-card.png",
+      "path": "assets/gallery/CY/2.webp"
+    },
+    {
+      "group": "SH",
+      "code": "2",
+      "title": "채서하 신분증 카드",
+      "status": "pending",
+      "preview": "assets/characters/chaeseoha-id-card.png",
+      "path": "assets/gallery/SH/2.webp"
+    },
+    {
+      "group": "CA",
+      "code": "2",
+      "title": "캐서린 신분증 카드",
+      "status": "pending",
+      "preview": "assets/characters/catherine-id-card.png",
+      "path": "assets/gallery/CA/2.webp"
+    },
+    {
+      "group": "AH",
+      "code": "2",
+      "title": "신아현 신분증 카드",
+      "status": "pending",
+      "preview": "assets/characters/shinahyeon-id-card.png",
+      "path": "assets/gallery/AH/2.webp"
+    },
+    {
+      "group": "YH",
+      "code": "2",
+      "title": "백유하 신분증 카드",
+      "status": "pending",
+      "preview": "assets/characters/baekyuha-id-card.png",
+      "path": "assets/gallery/YH/2.webp"
+    }
+  ]
+}

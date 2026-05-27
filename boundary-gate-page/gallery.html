@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>에셋 갤러리 | 경계의 문</title>
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <div class="site-shell">
+    <nav class="top-nav">
+      <a class="brand" href="index.html">
+        경계의 문
+        <small>External Asset Gallery</small>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">대문</a>
+        <a href="characters.html">등장인물</a>
+        <a href="world.html">세계관</a>
+        <a href="dex.html">괴이체 도감</a>
+        <a href="gallery.html">에셋 갤러리</a>
+      </div>
+    </nav>
+
+    <header class="hero-blue wrap">
+      <div>
+        <p class="eyebrow">External Image Code Table</p>
+        <h1 class="hero-title">Asset<br>Gallery</h1>
+        <p class="hero-copy">외부 이미지 코드를 미리 확인하고 복사할 수 있는 에셋 목록입니다.</p>
+        <div class="radio-strip"><span>[이미지규칙] 단어형 파일명 금지 · 코드표 밖 숫자 금지 · 등록된 파일만 출력 · 모호한 장면은 출력하지 않음</span></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section wrap">
+        <div class="section-head">
+          <h2>출력 양식</h2>
+          <p>아래 형식에 캐릭터 코드와 상황 코드를 넣어 사용합니다.</p>
+        </div>
+        <article class="glass-panel term-card compact-card">
+          <p><b>기본형</b><br>![](https://bi.pharang.workers.dev/i/{캐릭터코드}/{상황코드})</p>
+          <p><b>예시</b><br>![](https://bi.pharang.workers.dev/i/CY/1-1)</p>
+        </article>
+      </section>
+
+      <section class="section wrap">
+        <div class="section-head">
+          <h2>캐릭터 코드표</h2>
+          <p>이미지 주소의 첫 번째 코드입니다.</p>
+        </div>
+        <div class="code-table glass-panel">
+          <div class="code-row"><b>CY</b><span>청연</span></div>
+          <div class="code-row"><b>SH</b><span>채서하</span></div>
+          <div class="code-row"><b>CA</b><span>캐서린</span></div>
+          <div class="code-row"><b>AH</b><span>신아현</span></div>
+          <div class="code-row"><b>YH</b><span>백유하</span></div>
+          <div class="code-row"><b>HR</b><span>한유라</span></div>
+          <div class="code-row"><b>BH</b><span>백한</span></div>
+          <div class="code-row"><b>JW</b><span>이지우</span></div>
+          <div class="code-row"><b>YN</b><span>윤</span></div>
+        </div>
+      </section>
+
+      <section class="section wrap">
+        <div class="section-head">
+          <h2>상황 코드표</h2>
+          <p>이미지 주소의 두 번째 코드입니다. 뒤에 `-1`, `-2` 등 고유 번호가 붙습니다.</p>
+        </div>
+        
+        <h3 style="color: #0b5e89; margin: 0 0 12px; font-size: 18px;">특수 (장소, 이벤트)</h3>
+        <div class="code-table glass-panel" style="margin-bottom: 24px;">
+          <div class="code-row"><b>A01</b><span>롯데월드</span></div>
+          <div class="code-row"><b>A03</b><span>요트</span></div>
+          <div class="code-row"><b>A04</b><span>수족관</span></div>
+          <div class="code-row"><b>B01</b><span>해변</span></div>
+          <div class="code-row"><b>C02</b><span>카페</span></div>
+          <div class="code-row"><b>F04</b><span>해변 바캉스</span></div>
+          <div class="code-row"><b>G01</b><span>식사</span></div>
+          <div class="code-row"><b>G02</b><span>아이스크림</span></div>
+          <div class="code-row"><b>G03</b><span>캔맥주</span></div>
+          <div class="code-row"><b>G04</b><span>핫도그</span></div>
+          <div class="code-row"><b>E01</b><span>바다 전투</span></div>
+          <div class="code-row"><b>E02</b><span>숲 전투</span></div>
+        </div>
+
+        <h3 style="color: #0b5e89; margin: 0 0 12px; font-size: 18px;">감정</h3>
+        <div class="code-table glass-panel">
+          <div class="code-row"><b>0</b><span>프로필, 등장</span></div>
+          <div class="code-row"><b>1</b><span>평온</span></div>
+          <div class="code-row"><b>2</b><span>짜증</span></div>
+          <div class="code-row"><b>3</b><span>슬픔</span></div>
+          <div class="code-row"><b>4</b><span>놀람</span></div>
+          <div class="code-row"><b>5</b><span>충격</span></div>
+          <div class="code-row"><b>6</b><span>쑥스러움</span></div>
+          <div class="code-row"><b>7</b><span>설렘</span></div>
+          <div class="code-row"><b>8</b><span>홍조+부끄러움</span></div>
+          <div class="code-row"><b>9</b><span>웃음</span></div>
+          <div class="code-row"><b>10</b><span>일상</span></div>
+          <div class="code-row"><b>11</b><span>호감</span></div>
+          <div class="code-row"><b>12</b><span>경계</span></div>
+          <div class="code-row"><b>13</b><span>분노</span></div>
+          <div class="code-row"><b>14</b><span>전투</span></div>
+          <div class="code-row"><b>15</b><span>위기</span></div>
+          <div class="code-row"><b>16</b><span>침잠</span></div>
+          <div class="code-row"><b>17</b><span>영력 방출</span></div>
+          <div class="code-row"><b>20</b><span>비에 젖음</span></div>
+        </div>
+      </section>
+
+      <section class="section wrap">
+        <div class="section-head">
+          <h2>등록 에셋</h2>
+          <p>현재 등록된 전체 에셋 목록입니다. <b>이미지를 클릭하면 마크다운 주소가 복사됩니다.</b></p>
+        </div>
+        
+        <div style="margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+          <select id="character-filter" style="padding: 12px; border-radius: 8px; background: rgba(5,14,18,0.86); color: #eafcff; border: 1px solid rgba(126,226,255,0.2); font-size: 16px; font-weight: bold; flex: 1; max-width: 320px;">
+            <option value="ALL">전체 캐릭터 보기</option>
+            <option value="CY">CY (청연)</option>
+            <option value="SH">SH (채서하)</option>
+            <option value="CA">CA (캐서린)</option>
+            <option value="YH">YH (백유하)</option>
+            <option value="HR">HR (한유라)</option>
+            <option value="AH">AH (신아현)</option>
+            <option value="BH">BH (백한)</option>
+            <option value="JW">JW (이지우)</option>
+            <option value="YN">YN (윤)</option>
+          </select>
+          <select id="situation-filter" style="padding: 12px; border-radius: 8px; background: rgba(5,14,18,0.86); color: #eafcff; border: 1px solid rgba(126,226,255,0.2); font-size: 16px; font-weight: bold; flex: 1; max-width: 320px;">
+            <option value="ALL">상황 전체 보기</option>
+            <option value="0">0 (프로필, 등장)</option>
+            <option value="1">1 (평온)</option>
+            <option value="2">2 (짜증)</option>
+            <option value="3">3 (슬픔)</option>
+            <option value="4">4 (놀람)</option>
+            <option value="5">5 (충격)</option>
+            <option value="6">6 (쑥스러움)</option>
+            <option value="7">7 (설렘)</option>
+            <option value="8">8 (홍조+부끄러움)</option>
+            <option value="9">9 (웃음)</option>
+            <option value="10">10 (일상)</option>
+            <option value="11">11 (호감)</option>
+            <option value="12">12 (경계)</option>
+            <option value="13">13 (분노)</option>
+            <option value="14">14 (전투)</option>
+            <option value="15">15 (위기)</option>
+            <option value="16">16 (침잠)</option>
+            <option value="17">17 (영력 방출)</option>
+            <option value="20">20 (비에 젖음)</option>
+            <option value="A01">A01 (롯데월드)</option>
+            <option value="A03">A03 (요트)</option>
+            <option value="A04">A04 (수족관)</option>
+            <option value="B01">B01 (해변)</option>
+            <option value="C02">C02 (카페)</option>
+            <option value="E01">E01 (바다 전투)</option>
+            <option value="E02">E02 (숲 전투)</option>
+            <option value="F04">F04 (해변 바캉스)</option>
+            <option value="G01">G01 (식사)</option>
+            <option value="G02">G02 (아이스크림)</option>
+            <option value="G03">G03 (캔맥주)</option>
+            <option value="G04">G04 (핫도그)</option>
+          </select>
+        </div>
+
+        <div class="gallery-grid" id="asset-grid"></div>
+      </section>
+    </main>
+
+    <footer>경계의 문 · 외부 이미지 코드표 · Asset Gallery</footer>
+  </div>
+
+  <!-- 토스트 알림을 위한 스타일 -->
+  <style>
+    #toast {
+      visibility: hidden;
+      min-width: 250px;
+      margin-left: -125px;
+      background-color: rgba(5, 14, 18, 0.9);
+      color: #7ee2ff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 16px;
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      bottom: 30px;
+      font-size: 14px;
+      font-weight: bold;
+      border: 1px solid rgba(126, 226, 255, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: opacity 0.3s, bottom 0.3s;
+    }
+    #toast.show {
+      visibility: visible;
+      opacity: 1;
+      bottom: 50px;
+    }
+  </style>
+  <div id="toast">복사되었습니다!</div>
+
+  <!-- 이미지 모달 -->
+  <div id="image-modal" style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(5px); cursor: zoom-out;" onclick="closeModal()">
+    <span style="position: absolute; top: 20px; right: 30px; color: rgba(255,255,255,0.7); font-size: 40px; font-weight: bold; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">&times;</span>
+    <img id="modal-img" style="margin: auto; display: block; max-width: 90%; max-height: 90vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,0.8);" />
+  </div>
+
+  <script>
+    const filterSelect = document.getElementById('character-filter');
+    const situationSelect = document.getElementById('situation-filter');
+    const assetGrid = document.getElementById('asset-grid');
+    const toast = document.getElementById('toast');
+    let allAssets = [];
+
+    // 허용된 상황 코드 (특수 장소 및 감정 코드)
+    const allowedSituationPrefixes = [
+      'A01', 'A03', 'A04', 'B01', 'C02', 'F04', 'G01', 'G02', 'G03', 'G04', 'E01', 'E02',
+      '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '20'
+    ];
+
+    const showToast = (message) => {
+      toast.textContent = message;
+      toast.className = "show";
+      setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2000);
+    };
+
+    window.copyToClipboard = (text) => {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('복사되었습니다: ' + text);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    };
+
+    window.openModal = (imgSrc) => {
+      const modal = document.getElementById('image-modal');
+      const modalImg = document.getElementById('modal-img');
+      modal.style.display = "block";
+      modalImg.src = imgSrc;
+    };
+
+    window.closeModal = () => {
+      document.getElementById('image-modal').style.display = "none";
+    };
+
+    window.handleClick = (mdText, imgSrc) => {
+      copyToClipboard(mdText);
+      openModal(imgSrc);
+    };
+
+    const renderAssets = () => {
+      const charFilter = filterSelect.value;
+      const sitFilter = situationSelect.value;
+      
+      // 1차 필터링: 캐릭터 필터
+      let filtered = charFilter === 'ALL' 
+        ? allAssets 
+        : allAssets.filter(a => a.group === charFilter);
+      
+      // 2차 필터링: 상황코드 필터
+      if (sitFilter !== 'ALL') {
+        filtered = filtered.filter(a => {
+          const prefix = a.code.split('-')[0];
+          return prefix === sitFilter;
+        });
+      }
+      
+      // 3차 필터링: 허용된 코드표에 있는 에셋만 표시
+      filtered = filtered.filter(a => {
+        const prefix = a.code.split('-')[0];
+        return allowedSituationPrefixes.includes(prefix);
+      });
+        
+      // 4차: 정렬 (우선순위 캐릭터순 -> 상황코드 정렬)
+      const characterOrder = ['CY', 'SH', 'CA', 'YH', 'HR', 'AH', 'BH', 'JW', 'YN'];
+      filtered.sort((a, b) => {
+        const indexA = characterOrder.indexOf(a.group);
+        const indexB = characterOrder.indexOf(b.group);
+        
+        if (indexA !== indexB) {
+          if (indexA === -1) return 1;
+          if (indexB === -1) return -1;
+          return indexA - indexB;
+        }
+        return a.code.localeCompare(b.code, undefined, {numeric: true});
+      });
+
+      assetGrid.innerHTML = filtered
+        .map((asset) => {
+          const mdText = `![](https://bi.pharang.workers.dev/i/${asset.group}/${asset.code})`;
+          const imgSrc = `../asset-work/out/${asset.group}/${asset.code}.webp`;
+          return `
+            <article class="gallery-card" style="cursor: pointer; position: relative;" onclick="handleClick('${mdText}', '${imgSrc}')" title="클릭하여 주소 복사 및 원본 보기">
+              <img src="${imgSrc}" alt="${asset.group}/${asset.code}" loading="lazy" onerror="this.src='assets/characters/${asset.group.toLowerCase()}-id-card.png'"/>
+              <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); padding: 24px 12px 12px; display: flex; justify-content: space-between; align-items: flex-end;">
+                <strong style="color: #fff; font-size: 16px; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">${asset.group}/${asset.code}</strong>
+                <span style="background: rgba(0,0,0,0.6); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; pointer-events: none; border: 1px solid rgba(255,255,255,0.2);">클릭 복사</span>
+              </div>
+            </article>
+          `;
+        })
+        .join("");
+    };
+
+    filterSelect.addEventListener('change', renderAssets);
+    situationSelect.addEventListener('change', renderAssets);
+
+    fetch("../asset-work/out/manifest.json")
+      .then((response) => response.json())
+      .then((manifest) => {
+        allAssets = manifest.assets;
+        renderAssets();
+      })
+      .catch(err => {
+        console.error("Failed to load manifest:", err);
+        assetGrid.innerHTML = "<p style='color: #e54c61;'>에셋 매니페스트를 불러오지 못했습니다. 경로를 확인해주세요.</p>";
+      });
+  </script>
+</body>
+</html>
