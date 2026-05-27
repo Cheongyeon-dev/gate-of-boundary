@@ -212,6 +212,8 @@
     const toast = document.getElementById('toast');
     let allAssets = [];
 
+    const I_REPO_BASE = 'https://cheongyeon-dev.github.io/i';
+
     // 허용된 상황 코드 (특수 장소 및 감정 코드)
     const allowedSituationPrefixes = [
       'A01', 'A03', 'A04', 'B01', 'C02', 'F04', 'G01', 'G02', 'G03', 'G04', 'E01', 'E02',
@@ -288,7 +290,7 @@
       assetGrid.innerHTML = filtered
         .map((asset) => {
           const mdText = `![](https://bi.pharang.workers.dev/i/${asset.group}/${asset.code})`;
-          const imgSrc = `../asset-work/out/${asset.group}/${asset.code}.webp`;
+          const imgSrc = `${I_REPO_BASE}/${asset.group}/${asset.code}.webp`;
           return `
             <article class="gallery-card" style="cursor: pointer; position: relative;" onclick="handleClick('${mdText}', '${imgSrc}')" title="클릭하여 주소 복사 및 원본 보기">
               <img src="${imgSrc}" alt="${asset.group}/${asset.code}" loading="lazy" onerror="this.src='assets/characters/${asset.group.toLowerCase()}-id-card.png'"/>
@@ -305,7 +307,7 @@
     filterSelect.addEventListener('change', renderAssets);
     situationSelect.addEventListener('change', renderAssets);
 
-    fetch("../asset-work/out/manifest.json")
+    fetch(`${I_REPO_BASE}/manifest.json`)
       .then((response) => response.json())
       .then((manifest) => {
         allAssets = manifest.assets;

@@ -2,9 +2,6 @@
 !/.gitignore
 !/boundary-gate-page/
 !/boundary-gate-page/**
-!/asset-work/
-!/asset-work/out/
-!/asset-work/out/**
 
 node_modules/
 **/.node_modules/
