@@ -40,7 +40,7 @@
         <article class="glass-panel term-card compact-card">
           <p><b>입력 형식</b> (번호·확장자 붙이지 않음)<br>![](https://bi.pharang.workers.dev/i/{캐릭터코드}/{상황코드})</p>
           <p><b>예시</b><br>![](https://bi.pharang.workers.dev/i/CY/7)</p>
-          <p style="margin-top:12px; font-size:14px; opacity:0.85;">Worker가 등록된 변형 중 하나(<code>-1</code>, <code>-2</code> …)로 리다이렉트합니다. 아래 갤러리의 <code>7-1</code> 표기는 미리보기용 파일명이며, 복사·입력에는 <code>7</code>만 사용합니다.</p>
+          <p style="margin-top:12px; font-size:14px; opacity:0.85;">같은 상황코드에 여러 장이 있을 수 있습니다. 카드의 <code>7-1</code> 표기는 미리보기용이며, 복사·입력에는 <code>7</code>처럼 <b>상황코드만</b> 넣습니다.</p>
         </article>
       </section>
 
@@ -67,7 +67,7 @@
       <section class="section wrap">
         <div class="section-head">
           <h2>상황 코드표</h2>
-          <p>이미지 주소의 두 번째 코드입니다. URL에는 상황코드만 넣고, `-1` `-2` 꼬리표는 Worker·CDN 내부용입니다.</p>
+          <p>이미지 주소의 두 번째 코드입니다.</p>
         </div>
         
         <h3 style="color: #0b5e89; margin: 0 0 12px; font-size: 18px;">특수 (장소, 이벤트)</h3>
@@ -77,14 +77,14 @@
           <div class="code-row"><b>A04</b><span>해변 수영복</span></div>
           <div class="code-row"><b>B01</b><span>해안 산책</span></div>
           <div class="code-row"><b>C02</b><span>카페</span></div>
+          <div class="code-row"><b>E01</b><span>바다 전투</span></div>
+          <div class="code-row"><b>E02</b><span>숲 전투</span></div>
           <div class="code-row"><b>F02</b><span>헬기 / 출동</span></div>
           <div class="code-row"><b>F04</b><span>아쿠아리움</span></div>
           <div class="code-row"><b>G01</b><span>식사</span></div>
           <div class="code-row"><b>G02</b><span>아이스크림</span></div>
           <div class="code-row"><b>G03</b><span>캔맥주</span></div>
           <div class="code-row"><b>G04</b><span>핫도그</span></div>
-          <div class="code-row"><b>E01</b><span>바다 전투</span></div>
-          <div class="code-row"><b>E02</b><span>숲 전투</span></div>
         </div>
 
         <h3 style="color: #0b5e89; margin: 0 0 12px; font-size: 18px;">감정</h3>
@@ -156,9 +156,9 @@
             <option value="A04">A04 (해변 수영복)</option>
             <option value="B01">B01 (해안 산책)</option>
             <option value="C02">C02 (카페)</option>
-            <option value="F02">F02 (헬기 / 출동)</option>
             <option value="E01">E01 (바다 전투)</option>
             <option value="E02">E02 (숲 전투)</option>
+            <option value="F02">F02 (헬기 / 출동)</option>
             <option value="F04">F04 (아쿠아리움)</option>
             <option value="G01">G01 (식사)</option>
             <option value="G02">G02 (아이스크림)</option>
@@ -221,7 +221,7 @@
 
     // 허용된 상황 코드 (특수 장소 및 감정 코드)
     const allowedSituationPrefixes = [
-      'A01', 'A03', 'A04', 'B01', 'C02', 'F02', 'F04', 'G01', 'G02', 'G03', 'G04', 'E01', 'E02',
+      'A01', 'A03', 'A04', 'B01', 'C02', 'E01', 'E02', 'F02', 'F04', 'G01', 'G02', 'G03', 'G04',
       '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17'
     ];
 

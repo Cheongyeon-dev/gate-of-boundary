@@ -25,10 +25,9 @@
 
     <header class="hero-blue wrap">
       <div>
-        <p class="eyebrow">NSFW Image Code Table · 링크 전용</p>
+        <p class="eyebrow">Adult Asset Gallery</p>
         <h1 class="hero-title">Adult<br>Asset Gallery</h1>
-        <p class="hero-copy">성인용 상황 코드 미리보기입니다. 공개 홈 메뉴에는 없으며, 북마크·직접 URL로만 접근합니다. 썸네일은 CDN 실파일, 복사 주소는 Worker 리다이렉트와 동일합니다.</p>
-        <div class="radio-strip"><span>[규칙] 전연령 갤러리와 URL 형식 동일 · 코드 네임스페이스만 분리 · 슬롯별 `-1` `-2` … 전부 표시</span></div>
+        <p class="hero-copy">등록된 에셋을 미리 보고, 이미지 주소를 복사할 수 있습니다.</p>
       </div>
     </header>
 
@@ -36,22 +35,24 @@
       <section class="section wrap">
         <div class="section-head">
           <h2>출력 양식</h2>
-          <p>캐챗·로어북과 동일합니다. 상황코드만 입력하면 Worker가 <code>-1</code>, <code>-2</code> … 중 하나로 보냅니다.</p>
+          <p>아래 형식에 캐릭터 코드와 상황 코드를 넣어 사용합니다.</p>
         </div>
         <article class="glass-panel term-card compact-card">
           <p><b>입력 형식</b> (번호·확장자 붙이지 않음)<br>![](https://bi.pharang.workers.dev/i/{캐릭터코드}/{상황코드})</p>
           <p><b>예시</b><br>![](https://bi.pharang.workers.dev/i/CY/S01)</p>
-          <p style="margin-top:12px; font-size:14px; opacity:0.85;">갤러리의 <code>S01-1</code> 표기는 미리보기용 파일명입니다. <code>-1</code>을 URL에 넣지 마세요.</p>
+          <p style="margin-top:12px; font-size:14px; opacity:0.85;">카드의 <code>S01-1</code> 표기는 미리보기용입니다. 복사·입력에는 <code>S01</code>처럼 <b>상황코드만</b> 넣습니다.</p>
         </article>
       </section>
 
       <section class="section wrap">
         <div class="section-head">
-          <h2>상황 코드표 (언셒)</h2>
-          <p>전연령 코드와 겹치지 않는 별도 네임스페이스입니다. 상세는 <code>asset-work/NSFW-CODES.md</code> 참고.</p>
+          <h2>상황 코드표</h2>
+          <p>이미지 주소의 두 번째 코드입니다.</p>
         </div>
         <h3 style="color: #0b5e89; margin: 0 0 12px; font-size: 18px;">침실</h3>
         <div class="code-table glass-panel" style="margin-bottom: 24px;">
+          <div class="code-row"><b>DD</b><span>수유대딸</span></div>
+          <div class="code-row"><b>FG</b><span>핑거링POV</span></div>
           <div class="code-row"><b>S01</b><span>낮</span></div>
           <div class="code-row"><b>S02</b><span>밤</span></div>
           <div class="code-row"><b>S03</b><span>키스</span></div>
@@ -62,8 +63,6 @@
           <div class="code-row"><b>X03</b><span>질외</span></div>
           <div class="code-row"><b>X04</b><span>핸드잡</span></div>
           <div class="code-row"><b>X05</b><span>삽입 전</span></div>
-          <div class="code-row"><b>DD</b><span>수유대딸</span></div>
-          <div class="code-row"><b>FG</b><span>핑거링POV</span></div>
         </div>
         <h3 style="color: #0b5e89; margin: 0 0 12px; font-size: 18px;">카섹</h3>
         <div class="code-table glass-panel" style="margin-bottom: 24px;">
@@ -91,23 +90,23 @@
         <h3 style="color: #0b5e89; margin: 0 0 12px; font-size: 18px;">여캐플</h3>
         <div class="code-table glass-panel">
           <div class="code-row"><b>FDR</b><span>카섹</span></div>
+          <div class="code-row"><b>FG</b><span>핑거링POV</span></div>
           <div class="code-row"><b>FO</b><span>커닐</span></div>
           <div class="code-row"><b>FS</b><span>섹스</span></div>
           <div class="code-row"><b>S03</b><span>키스</span></div>
-          <div class="code-row"><b>FG</b><span>핑거링POV</span></div>
         </div>
         <h3 style="color: #0b5e89; margin: 0 0 12px; font-size: 18px;">용궁</h3>
         <div class="code-table glass-panel">
-          <div class="code-row"><b>WP</b><span>HL·RY 침실 정사</span></div>
           <div class="code-row"><b>W1</b><span>HL·RY 정사 전</span></div>
           <div class="code-row"><b>WF</b><span>HL·RY 펠라</span></div>
+          <div class="code-row"><b>WP</b><span>HL·RY 침실 정사</span></div>
         </div>
       </section>
 
       <section class="section wrap">
         <div class="section-head">
-          <h2>등록 에셋 (n)</h2>
-          <p>CDN 실파일 미리보기입니다. <b>클릭 시 상황코드만 담긴 주소 복사 + 확대.</b> 카드에 보이는 <code>-1</code>은 슬롯 구분용입니다.</p>
+          <h2>등록 에셋</h2>
+          <p>등록된 전체 목록입니다. <b>클릭하면 주소가 복사되고</b> 이미지를 크게 볼 수 있습니다.</p>
         </div>
         <div style="margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
           <select id="character-filter" style="padding: 12px; border-radius: 8px; background: rgba(5,14,18,0.86); color: #eafcff; border: 1px solid rgba(126,226,255,0.2); font-size: 16px; font-weight: bold; flex: 1; max-width: 320px;">
@@ -124,38 +123,38 @@
           </select>
           <select id="situation-filter" style="padding: 12px; border-radius: 8px; background: rgba(5,14,18,0.86); color: #eafcff; border: 1px solid rgba(126,226,255,0.2); font-size: 16px; font-weight: bold; flex: 1; max-width: 320px;">
             <option value="ALL">상황 전체</option>
-            <option value="S01">침실:낮</option>
-            <option value="S02">침실:밤</option>
-            <option value="S03">키스</option>
-            <option value="S05">입싸</option>
-            <option value="S06">얼싸</option>
-            <option value="X01">파이즈리</option>
-            <option value="X02">펠라</option>
-            <option value="X03">질외</option>
-            <option value="X04">핸드잡</option>
-            <option value="X05">정사 전</option>
-            <option value="DD">수유대딸</option>
-            <option value="FG">핑거링</option>
-            <option value="DR01">카섹:운전석</option>
-            <option value="DR02">카섹:기승위</option>
-            <option value="DR03">카섹:키스</option>
-            <option value="DR04">카섹:파이즈리</option>
-            <option value="DR05">카섹:반나체</option>
-            <option value="T01">화장실:좌위</option>
-            <option value="T02">화장실:들박 </option>
-            <option value="T03">화장실: 펠라</option>
-            <option value="BA01">들박</option>
-            <option value="BA02">애널</option>
-            <option value="BA03">유리 밀착</option>
-            <option value="BA04">통창/후배위</option>
-            <option value="BA06">애널 애무/후배위</option>
-            <option value="BA07">애널</option>
-            <option value="FDR">레즈 카섹</option>
-            <option value="FO">레즈 커닐</option>
-            <option value="FS">레즈 섹스</option>
-            <option value="WP">용궁</option>
-            <option value="W1">용궁-정사 전</option>
-            <option value="WF">용궁-펠라</option>
+            <option value="BA01">BA01 (들박)</option>
+            <option value="BA02">BA02 (애널)</option>
+            <option value="BA03">BA03 (유리 밀착)</option>
+            <option value="BA04">BA04 (통창/후배위)</option>
+            <option value="BA06">BA06 (애널 애무/후배위)</option>
+            <option value="BA07">BA07 (애널)</option>
+            <option value="DD">DD (수유대딸)</option>
+            <option value="DR01">DR01 (카섹·운전석)</option>
+            <option value="DR02">DR02 (카섹·기승위)</option>
+            <option value="DR03">DR03 (카섹·키스)</option>
+            <option value="DR04">DR04 (카섹·파이즈리)</option>
+            <option value="DR05">DR05 (카섹·반나체)</option>
+            <option value="FDR">FDR (레즈 카섹)</option>
+            <option value="FG">FG (핑거링)</option>
+            <option value="FO">FO (레즈 커닐)</option>
+            <option value="FS">FS (레즈 섹스)</option>
+            <option value="S01">S01 (침실·낮)</option>
+            <option value="S02">S02 (침실·밤)</option>
+            <option value="S03">S03 (키스)</option>
+            <option value="S05">S05 (입싸)</option>
+            <option value="S06">S06 (얼싸)</option>
+            <option value="T01">T01 (화장실·좌위)</option>
+            <option value="T02">T02 (화장실·들박)</option>
+            <option value="T03">T03 (화장실·펠라)</option>
+            <option value="W1">W1 (용궁·정사 전)</option>
+            <option value="WF">WF (용궁·펠라)</option>
+            <option value="WP">WP (용궁)</option>
+            <option value="X01">X01 (파이즈리)</option>
+            <option value="X02">X02 (펠라)</option>
+            <option value="X03">X03 (질외)</option>
+            <option value="X04">X04 (핸드잡)</option>
+            <option value="X05">X05 (정사 전)</option>
 
           </select>
         </div>
