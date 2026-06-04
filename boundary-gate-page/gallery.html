@@ -58,6 +58,8 @@
           <div class="code-row"><b>BH</b><span>백한</span></div>
           <div class="code-row"><b>JW</b><span>이지우</span></div>
           <div class="code-row"><b>YN</b><span>윤</span></div>
+          <div class="code-row"><b>HL</b><span>화령</span></div>
+          <div class="code-row"><b>RY</b><span>류연희</span></div>
         </div>
       </section>
 
@@ -74,6 +76,7 @@
           <div class="code-row"><b>A04</b><span>해변 수영복</span></div>
           <div class="code-row"><b>B01</b><span>해안 산책</span></div>
           <div class="code-row"><b>C02</b><span>카페</span></div>
+          <div class="code-row"><b>F02</b><span>헬기 / 출동</span></div>
           <div class="code-row"><b>F04</b><span>아쿠아리움</span></div>
           <div class="code-row"><b>G01</b><span>식사</span></div>
           <div class="code-row"><b>G02</b><span>아이스크림</span></div>
@@ -124,6 +127,8 @@
             <option value="BH">BH (백한)</option>
             <option value="JW">JW (이지우)</option>
             <option value="YN">YN (윤)</option>
+            <option value="HL">HL (화령)</option>
+            <option value="RY">RY (류연희)</option>
           </select>
           <select id="situation-filter" style="padding: 12px; border-radius: 8px; background: rgba(5,14,18,0.86); color: #eafcff; border: 1px solid rgba(126,226,255,0.2); font-size: 16px; font-weight: bold; flex: 1; max-width: 320px;">
             <option value="ALL">상황 전체 보기</option>
@@ -150,6 +155,7 @@
             <option value="A04">A04 (해변 수영복)</option>
             <option value="B01">B01 (해안 산책)</option>
             <option value="C02">C02 (카페)</option>
+            <option value="F02">F02 (헬기 / 출동)</option>
             <option value="E01">E01 (바다 전투)</option>
             <option value="E02">E02 (숲 전투)</option>
             <option value="F04">F04 (아쿠아리움)</option>
@@ -214,7 +220,7 @@
 
     // 허용된 상황 코드 (특수 장소 및 감정 코드)
     const allowedSituationPrefixes = [
-      'A01', 'A03', 'A04', 'B01', 'C02', 'F04', 'G01', 'G02', 'G03', 'G04', 'E01', 'E02',
+      'A01', 'A03', 'A04', 'B01', 'C02', 'F02', 'F04', 'G01', 'G02', 'G03', 'G04', 'E01', 'E02',
       '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17'
     ];
 
@@ -272,7 +278,7 @@
       });
         
       // 4차: 정렬 (우선순위 캐릭터순 -> 상황코드 정렬)
-      const characterOrder = ['CY', 'SH', 'CA', 'YH', 'HR', 'AH', 'BH', 'JW', 'YN'];
+      const characterOrder = ['CY', 'SH', 'CA', 'YH', 'HR', 'AH', 'BH', 'JW', 'YN', 'HL', 'RY'];
       filtered.sort((a, b) => {
         const indexA = characterOrder.indexOf(a.group);
         const indexB = characterOrder.indexOf(b.group);
