@@ -37,7 +37,7 @@
           <h2>출력 양식</h2>
         </div>
         <article class="glass-panel term-card compact-card">
-          <p><b>기본형</b><br>![](https://bi.pharang.workers.dev/i/{캐릭터코드}/{상황코드})</p>
+          <p><b>입력 형식</b><br>![](https://bi.pharang.workers.dev/i/{캐릭터코드}/{상황코드})</p>
           <p><b>예시</b><br>![](https://bi.pharang.workers.dev/i/CY/7)</p>
         </article>
       </section>
@@ -81,6 +81,8 @@
           <div class="code-row"><b>G02</b><span>아이스크림</span></div>
           <div class="code-row"><b>G03</b><span>캔맥주</span></div>
           <div class="code-row"><b>G04</b><span>핫도그</span></div>
+          <div class="code-row"><b>WD</b><span>웨딩</span></div>
+          <div class="code-row"><b>BB</b><span>육아</span></div>
         </div>
 
         <h3 style="color: #0b5e89; margin: 0 0 12px; font-size: 18px;">감정</h3>
@@ -160,6 +162,8 @@
             <option value="G02">G02 (아이스크림)</option>
             <option value="G03">G03 (캔맥주)</option>
             <option value="G04">G04 (핫도그)</option>
+            <option value="WD">WD (웨딩)</option>
+            <option value="BB">BB (육아)</option>
           </select>
         </div>
 
@@ -217,7 +221,7 @@
 
     // 허용된 상황 코드 (특수 장소 및 감정 코드)
     const allowedSituationPrefixes = [
-      'A01', 'A03', 'A04', 'B01', 'C02', 'E01', 'E02', 'F02', 'F04', 'G01', 'G02', 'G03', 'G04',
+      'A01', 'A03', 'A04', 'B01', 'BB', 'C02', 'E01', 'E02', 'F02', 'F04', 'G01', 'G02', 'G03', 'G04', 'WD',
       '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17'
     ];
 
