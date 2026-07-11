@@ -2,6 +2,11 @@
 !/.gitignore
 !/boundary-gate-page/
 !/boundary-gate-page/**
+!/cruise-page/
+!/cruise-page/**
+!/lorebox-worker/
+!/lorebox-worker/**
+!/lorebox-worker/node_modules/
 
 node_modules/
 **/.node_modules/
